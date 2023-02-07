@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { createContext, useEffect, useState } from 'react';
+import { ConfigProvider, theme } from 'antd';
+import { themeToken } from './themeToken';
+
+import { MainRoutes } from './Pages/Routes';
+
+export const ThemeContext = createContext();
 
 function App() {
+  const { defaultAlgorithm, darkAlgorithm } = theme;
+
+  const themeMode = localStorage.getItem("themeMode");
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    setIsDarkMode(themeMode === "dark" ? true : false);
+  }, [themeMode]);
+
+  // console.log(isDarkMode);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ConfigProvider
+      theme={{ 
+        algorithm: isDarkMode ? darkAlgorithm : defaultAlgorithm,
+        token: themeToken(isDarkMode),
+      }}
+    >
+      <ThemeContext.Provider value={{isDarkMode, setIsDarkMode}}>
+        <MainRoutes />
+      </ThemeContext.Provider>
+    </ConfigProvider>
   );
 }
 
