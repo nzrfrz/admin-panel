@@ -9,7 +9,7 @@ import {
     UserOutlined,
 } from '@ant-design/icons';
 
-import { protectedRouteList } from "./RouteRegistry";
+import { sidebarRouteList } from "./RouteRegistry";
 
 import { toTitleCase } from "../../_helper";
 
@@ -28,7 +28,7 @@ export const BreadCrumb = () => {
         const data = tempBreadcrumbData.map((data) => {
             return {
                 path: data,
-                icon: protectedRouteList.filter((routeItem) => routeItem.key === data).map((data) => data.icon)[0]
+                icon: sidebarRouteList.filter((routeItem) => routeItem.key === data).map((data) => data.icon)[0]
             }
         });
 

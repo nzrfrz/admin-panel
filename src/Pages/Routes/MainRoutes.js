@@ -15,7 +15,7 @@ import {
 } from "../Auth";
 
 import { HomeLayout } from "../HomeLayout";
-import { protectedRouteList } from "./RouteRegistry";
+import { sidebarRouteList, otherRouteList } from "./RouteRegistry";
 
 export const MainRoutes = ({isDarkMode, setIsDarkMode}) => {
 
@@ -35,8 +35,10 @@ export const MainRoutes = ({isDarkMode, setIsDarkMode}) => {
             {/* PROTECTED ROUTES */}
             <Route path="/" element={<ProtectedRoute />} >
                 <Route path="/" element={<HomeLayout />} >
+
+                    {/* sidebar routes */}
                     {
-                        protectedRouteList?.map((data, index) => {
+                        sidebarRouteList?.map((data, index) => {
                             if (data.children.length === 0) {
                                 return (
                                     <Route key={index} {...data.isIndex === true ? index : null} path={data.path} element={data.element} />
@@ -50,6 +52,15 @@ export const MainRoutes = ({isDarkMode, setIsDarkMode}) => {
                             }
                         })
                     }
+                    {/* sidebar routes */}
+
+                    {/* other route */}
+                    {
+                        otherRouteList.map((data, index) => 
+                            <Route key={index} path={data.path} element={data.element} />
+                        )
+                    }
+                    {/* other route */}
                     <Route path="/" element={<Navigate to={"/dashboard"} replace />} />
                 </Route>
             </Route>

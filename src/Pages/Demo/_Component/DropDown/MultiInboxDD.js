@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { 
     theme,
     Badge,
@@ -15,27 +16,34 @@ const { Text } = Typography;
 const inboxType = [
     {
         label: "Chat",
-        count: 5
+        count: 5,
+        path: "/chat"
     },
     {
         label: "Discussion",
-        count: 3
+        count: 3,
+        path: "/discussion"
     },
     {
         label: "Review",
-        count: 7
+        count: 7,
+        path: "/review"
     },
     {
         label: "Help Message",
-        count: 2
+        count: 2,
+        path: "/help"
     },
     {
         label: "Order Complained",
-        count: 2
+        count: 2,
+        path: "/complain"
     },
 ];
 
 export const MultiInboxDD = () => {
+    const navigate = useNavigate();
+    const [openDD, setOpenDD] = useState(false);
 
     const {
         token: { 
@@ -55,8 +63,10 @@ export const MultiInboxDD = () => {
         >
             <Dropdown
                 menu={{}}
+                open={openDD}
                 trigger="click"
                 placement="bottomRight"
+                onOpenChange={(flag) => setOpenDD(flag)}
                 dropdownRender={() => (
                     <div
                         className="header-menu-dd-multi-inbox"
@@ -74,6 +84,10 @@ export const MultiInboxDD = () => {
                                     style={{
                                         "--bgc": colorBgTextHover,
                                         borderRadius: borderRadiusLG,
+                                    }}
+                                    onClick={() => {
+                                        setOpenDD(false);
+                                        navigate(data.path);
                                     }}
                                 >
                                     <Text>{data.label}</Text>

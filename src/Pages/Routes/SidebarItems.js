@@ -1,4 +1,4 @@
-import { protectedRouteList } from "./RouteRegistry";
+import { sidebarRouteList } from "./RouteRegistry";
 
 const setSidebarMenuItems = (label, key, icon, children) => {
     return { label, key, icon, children };
@@ -6,7 +6,7 @@ const setSidebarMenuItems = (label, key, icon, children) => {
 
 export const sidebarItems = () => {
 
-    return protectedRouteList.map((data) => {
+    return sidebarRouteList.map((data) => {
         if (data.children.length === 0) {
             return (
                 setSidebarMenuItems(
@@ -31,4 +31,4 @@ export const sidebarItems = () => {
     })
 };
 
-export const sidebarItemKeys = protectedRouteList.map((data) => data.key);
+export const sidebarItemKeys = sidebarRouteList.map((data) => data.key);

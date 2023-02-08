@@ -9,6 +9,8 @@ import {
 } from "react-icons/ai";
 import { RxDot } from "react-icons/rx";
 import { FaWpforms } from "react-icons/fa";
+import { RiKnifeLine } from "react-icons/ri"
+
 
 import { 
     DemoDashboard,
@@ -16,12 +18,23 @@ import {
 
     LayoutOne,
     LayoutTwo,
+    LayoutThree,
 
     RegistrationForms,
-    UpdateForms
+    UpdateForms, 
+    SplitForm,
+
+    ChatPage,
+    DiscussionPage,
+    ReviewPage,
+    HelpPage,
+    ComplainPages,
+
+    Operation
 } from "../Demo";
 
-export const protectedRouteList = [
+// Edit here to create new sidebar route
+export const sidebarRouteList = [
     {
         key: "Dashboard",
         label: <Link to="/dashboard" >Dashboard</Link>,
@@ -64,6 +77,14 @@ export const protectedRouteList = [
                 icon: null,
                 children: null
             },
+            {
+                key: "Layout Three",
+                label: <Link to="/content_layout/layout_three" ><RxDot/>Layout Three</Link>,
+                path: "/content_layout/layout_three",
+                element: <LayoutThree />,
+                icon: null,
+                children: null
+            },
         ]
     },
     {
@@ -82,14 +103,79 @@ export const protectedRouteList = [
                 icon: null,
                 children: null
             },
+            // {
+            //     key: "Update Forms",
+            //     label: <Link to="/forms/update_forms" ><RxDot/>Update Forms</Link>,
+            //     path: "/forms/update_forms",
+            //     element: <UpdateForms />,
+            //     icon: null,
+            //     children: null
+            // },
             {
-                key: "Update Forms",
-                label: <Link to="/forms/update_forms" ><RxDot/>Update Forms</Link>,
-                path: "/forms/update_forms",
-                element: <UpdateForms />,
+                key: "Split Forms",
+                label: <Link to="/forms/split_forms" ><RxDot/>Split Forms</Link>,
+                path: "/forms/split_forms",
+                element: <SplitForm />,
                 icon: null,
                 children: null
             },
         ],
+    },
+    {
+        key: "Operation",
+        label: <Link to="/operation" >Operation</Link>,
+        path: "/operation",
+        isIndex: false,
+        element: <Operation />,
+        icon: <RiKnifeLine />,
+        children: [],
+    },
+];
+
+export const otherRouteList = [
+    {
+        key: "Chat",
+        label: null,
+        path: "/chat",
+        isIndex: false,
+        element: <ChatPage />,
+        icon: null,
+        children: [],
+    },
+    {
+        key: "Discussion",
+        label: null,
+        path: "/discussion",
+        isIndex: false,
+        element: <DiscussionPage />,
+        icon: null,
+        children: [],
+    },
+    {
+        key: "Review",
+        label: null,
+        path: "/review",
+        isIndex: false,
+        element: <ReviewPage />,
+        icon: null,
+        children: [],
+    },
+    {
+        key: "Help",
+        label: null,
+        path: "/help",
+        isIndex: false,
+        element: <HelpPage />,
+        icon: null,
+        children: [],
+    },
+    {
+        key: "Complain",
+        label: null,
+        path: "/complain",
+        isIndex: false,
+        element: <ComplainPages />,
+        icon: null,
+        children: [],
     },
 ];

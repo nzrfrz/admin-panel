@@ -38,3 +38,22 @@
     transition: all 0.5s;
 }
 /*#endregion ---------- update forms ---------- */
+
+/*#region ---------- split forms ---------- */
+.split-forms-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.split-forms-container > * {
+    display: flex;
+    flex-grow: 1;
+    flex-wrap: wrap;
+    flex-basis: 300px;
+    flex-direction: column;
+    padding: 12px;
+    background-color: var(--bgc);
+}
+
+/*#endregion ---------- split forms ---------- */

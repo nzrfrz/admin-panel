@@ -1,7 +1,32 @@
-# Getting Started with Create React App
+# React Admin Panel
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Admin panel with reactJS and Ant Design V5 ui library.
 
+## Preinstalled dependencies
+- antd 5.1.6
+- axios 1.3.2
+- dayjs 1.11.7
+- react-icons 4.7.1
+- react-router-dom 6.8.0
+
+## How To Use
+### Run The Project
+- Clone this github repo
+- Inside this folder, open terminal and run `npm install` or `npm install --legacy-peer-deps` if the first run is not successfully
+- After installation is complete, just run `npm start`
+- Enjoy and explore the project
+
+### Folder Structure
+![alt text](https://raw.githubusercontent.com/nzrfrz/nzrfrz/main/admin-panel-doc-image/admin-panel-doc-folder-structure.png "Folder Structure")
+- This project mostly render the component from `Demo` folder.  If you use this project and intend to put this into production, and you are not comfortable, or you want to delete all the `Demo` folder, feel free to do that, but please make sure that your project is run correctly without the folder, or you can still use the component in the `Demo` folder, and you can put the file that you want to use, put it directly in parent folder or create a new folder, check if the project run correctly, then you can remove the `Demo` folder.
+- Follow the Setting below to start building your own Admin Panel inside this project
+
+### Theme Settings
+SOON
+
+### Route Setting
+
+---
 ## Available Scripts
 
 In the project directory, you can run:

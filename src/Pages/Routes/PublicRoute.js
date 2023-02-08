@@ -10,7 +10,11 @@ export const PublicRoute = () => {
     }, []);
 
     useEffect(() => {
-        localStorage.setItem("themeMode", "light");
+        const initialTheme = localStorage.getItem("themeMode");
+        if (initialTheme === null) {
+            localStorage.setItem("themeMode", "light");
+            console.log("SET INITIAL THEME");
+        }
     }, [])
 
     return (
