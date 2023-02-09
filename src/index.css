@@ -14,6 +14,7 @@
 @import url(./_css/demo/menuBurger.css);
 @import url(./_css/demo/layout.css);
 @import url(./_css/demo/forms.css);
+@import url(./_css/demo/operation.css);
 
 body {
   margin: 0;
@@ -40,6 +41,7 @@ code {
 
 ::-webkit-scrollbar {
   width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-thumb {

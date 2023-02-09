@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { 
     Layout, 
@@ -36,6 +36,8 @@ const { Header, Sider, Content, Footer } = Layout;
 const { Text } = Typography;
 
 export const HomeLayout = () => {
+    const contentRef = useRef();
+    console.log(contentRef.current?.clientWidth);
     const location = useLocation();
     const { isDarkMode, setIsDarkMode } = useContext(ThemeContext);
 
@@ -224,16 +226,20 @@ export const HomeLayout = () => {
                 </Header>
                 <BreadCrumb />
                 <Content
+                    ref={contentRef}
                     style={{
+                        "--contentWidth": contentRef.current?.clientWidth,
+                        // width: "500px",
                         margin: '12px 16px',
                         background: "transparent",
-                        overflow: "auto",
+                        overflowY: "auto",
+                        // overflowX: "hidden",
                         scrollbarWidth: "none",
                         msOverflowStyle: "none",
                         transition: "all 0.5s"
                     }}
                 >
-                    <Outlet context={[isDarkMode, setIsDarkMode]} />
+                    <Outlet />
                 </Content>
                 <Footer
                     style={{

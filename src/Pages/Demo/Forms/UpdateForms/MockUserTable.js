@@ -16,16 +16,16 @@ import {
     EditOutlined
 } from '@ant-design/icons';
 
-import { mockAPIGetUser } from "../../../../_services/Demo/mockAPIUser";
+// import { mockAPIGetUser } from "../../../../_services/Demo/mockAPIUser";
 
 const { Text, Title } = Typography;
 
 export const MockUserTable = ({form, setSelectedTableRow}) => {
     const [userData, setUserData] = useState([]);
 
-    useEffect(() => {
-        mockAPIGetUser(setUserData);
-    }, []);
+    // useEffect(() => {
+    //     mockAPIGetUser(setUserData);
+    // }, []);
 
     const {
         token: { 
