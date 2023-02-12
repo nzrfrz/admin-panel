@@ -1,8 +1,6 @@
 .operation-container {
     display: flex;
-    flex-wrap: wrap;
     flex-direction: column;
-    /* width: var(--contentWidth); */
     gap: 24px;
 }
 
@@ -23,7 +21,27 @@
 .operation-bottom-section {
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     padding: 12px 12px;
     border-radius: var(--brRd);
     background-color: var(--bgc);
 }
+
+/*#region ---------- registration corporate forms ---------- */
+.corporate-forms-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.corporate-forms-container > * {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 300px;
+    padding: 12px;
+    border-radius: var(--brRd);
+    background-color: var(--bgc);
+    gap: 12px;
+}
+
+/*#endregion ---------- registration corporate forms ---------- */

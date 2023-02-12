@@ -31,7 +31,7 @@ import {
     ComplainPages,
 
     Operation
-} from "../Demo";
+} from "../Pages/Demo";
 
 // Edit here to create new sidebar route
 export const sidebarRouteList = [

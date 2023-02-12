@@ -2,7 +2,7 @@ import React, { createContext, useEffect, useState } from 'react';
 import { ConfigProvider, theme } from 'antd';
 import { themeToken } from './themeToken';
 
-import { MainRoutes } from './Pages/Routes';
+import { MainRoutes } from './Routes';
 
 export const ThemeContext = createContext();
 

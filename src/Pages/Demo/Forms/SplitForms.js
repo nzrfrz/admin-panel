@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { 
     theme,
     Layout, 
@@ -10,22 +10,86 @@ import {
     Divider,
     Form,
     Input,
+    Space
 } from 'antd';
 import { ThemeContext } from "../../../App";
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
-import { FormSelect } from "./FormInputComp";
+import { 
+    DOBForm,
+    GenderSelectForm,
+    PersonalNameForm ,
+    PersonalPositionForm,
+
+    CompanyNameForm
+} from "./CorpInfoFormItems";
+
+import { 
+    AddressForm, 
+    ContactForm, 
+    CurrencyForm, 
+    DateRangeForm, 
+    RegionSelectForm,
+    SimpleNumberForm,
+    SimpleSelectForm,
+    UserNameForm,
+} from "./FormItems";
+import { CustomDynamicForm } from "../Operation/OperationForms/CustomDynamicForm";
 
 const { Text, Title } = Typography;
 
 export const SplitForm = () => {
+    const lastContainerRef = useRef();
     const { isDarkMode } = useContext(ThemeContext);
 
     const [form] = Form.useForm();
 
+    const [lastContainerWidth, setLastContainerWidth] = useState(0);
+    // console.log(lastContainerWidth);
+
     const onFinish = (values) => {
-        form.resetFields();
+        // const contractList = values.channelDeals.map((data) => {
+        //     return {
+        //         platform: data.platform,
+        //         price: data.price,
+        //         effectiveStartDate: data.specificDate[0].format('YYYY-MM-DD'),
+        //         effectiveEndDate: data.specificDate[1].format('YYYY-MM-DD'),
+        //     }
+        // });
+        const formData = {
+            ...values,
+            // 'dateOfBirth': values['dateOfBirth'].format('YYYY-MM-DD'),
+            // 'contactNumber': values.contactNumber.areaCode.toString().replace('+', '') + values.contactNumber.phoneNumber.toString(),
+            // 'contractActiveDate': [values['contractActiveDate'][0].format('YYYY-MM-DD'), values['contractActiveDate'][1].format('YYYY-MM-DD')],
+            // 'contractActiveStartDate': values['contractActiveDate'][0].format('YYYY-MM-DD'),
+            // 'contractActiveEndDate': values['contractActiveDate'][1].format('YYYY-MM-DD'),
+        };
+
+        const { contractActiveDate, ...newFormData } = formData;
+        
+        // form.resetFields();
+        // console.log('CUSTOM FORM DATA: ', newFormData);
         console.log('Received values of form: ', values);
     };
+
+    const wrapperCol = useMemo(() => {
+        switch (true) {
+            case lastContainerWidth >= 400 && lastContainerWidth >= 530:
+                return 10;    
+            case lastContainerWidth >= 530:
+                return 20;
+            default:
+                return 0;
+        }
+    }, [lastContainerWidth]);
+
+    useEffect(() => {
+        const observer = new ResizeObserver(entries => {
+            setLastContainerWidth(entries[0].contentRect.width);
+        })
+        observer.observe(lastContainerRef.current)
+        return () => lastContainerRef.current && observer.unobserve(lastContainerRef.current)
+    }, []);
 
     const {
         token: { 
@@ -35,74 +99,90 @@ export const SplitForm = () => {
 
     return (
         <div 
-            className="split-forms-container"
+            className="corporate-forms-container"
             style={{
+                "--brRd": `${borderRadiusLG}px`,
                 "--bgc": isDarkMode === true ? "var(--contentContainerDarkMode)" : "var(--contentContainerLightMode)"
             }}
         >
-            <div 
-                className="split-forms-left-side"
-                style={{
-                    borderRadius: borderRadiusLG,
-                }}
-            >
-                <Title level={3}>Form Left Side</Title>
+            <div className="pic-container">
+                <Title level={4}>Person In Charge Info</Title>
                 <Form
                     form={form}
-                    labelCol={{ span: 10 }}
-                    wrapperCol={{ span: 16 }}
+                    wrapperCol={{ span: 24 }}
+                    layout="vertical"
                     onFinish={onFinish}
                     style={{
                         width: "auto",
                     }}
                     scrollToFirstError
                 >
-                    <Form.Item
-                        name="companyName"
-                        label="Company Name"
-                        rules={[
-                            {
-                                required: true,
-                                message: "Company name can not be empty"
-                            }
-                        ]}
-                    >
-                        <Input />
-                    </Form.Item>
-
-                    <FormSelect />
-
+                    {/* <PersonalNameForm />
+                    <PersonalPositionForm />
+                    <DOBForm />
+                    <GenderSelectForm />
+                    <AddressForm 
+                        name="personalAddress"
+                        label="Personal Address"
+                    />
+                    <RegionSelectForm 
+                        form={form}
+                        fullRegion={true}
+                    />
+                    <ContactForm
+                        label="Phone Number"
+                        name="contactNumber"
+                        isMobileNumber={false}
+                    /> */}
+                    {/* <UserNameForm /> */}
+                    {/* <SimpleNumberForm 
+                        name="postalCode"
+                        label="Postal Code"
+                    /> */}
+                    {/* <DateRangeForm 
+                        name="contractActiveDate"
+                        label="Contract Active Date"
+                    /> */}
+                    {/* <CustomDynamicForm /> */}
+                </Form>
+            </div>
+            <div className="corp-info-container">
+                <Title level={4}>Corporate Info</Title>
+                <Form
+                    form={form}
+                    wrapperCol={{ span: 24 }}
+                    layout="vertical"
+                    onFinish={onFinish}
+                    style={{
+                        width: "auto",
+                    }}
+                    scrollToFirstError
+                >
+                    <CompanyNameForm />
                 </Form>
             </div>
             <div 
-                className="split-forms-right-side"
-                style={{
-                    borderRadius: borderRadiusLG,
-                }}
+                ref={lastContainerRef}
+                className="contract-info-container"
             >
-                <Title level={3}>Form Right Side</Title>
+                <Title level={4}>Contract Info</Title>
                 <Form
                     form={form}
-                    labelCol={{ span: 10 }}
-                    wrapperCol={{ span: 16 }}
+                    labelCol={{ span: lastContainerWidth >= 500 ? 8 : 0 }}
+                    wrapperCol={{ span: lastContainerWidth >= 500 ? 12 : 0 }}
+                    // wrapperCol={{ span: wrapperCol }}
+                    layout={lastContainerWidth >= 500 ? "horizontal" : "vertical"}
                     onFinish={onFinish}
+                    initialValues={{ channelDeals: [{"platform": undefined}] }}
                     style={{
                         width: "auto",
                     }}
                     scrollToFirstError
                 >
-                    <Form.Item
-                        name="userName"
-                        label="User Name"
-                        rules={[
-                            {
-                                required: true,
-                                message: "User name can not be empty"
-                            }
-                        ]}
-                    >
-                        <Input />
-                    </Form.Item>
+                    <CustomDynamicForm 
+                        formProps={form}
+                        lastContainerWidth={lastContainerWidth}
+                    />
 
                     <Form.Item
                         style={{
@@ -111,7 +191,7 @@ export const SplitForm = () => {
                         }}
                     >
                         <Button type="primary" htmlType="submit">
-                            Register
+                            Update
                         </Button>
                     </Form.Item>
                 </Form>

@@ -13,7 +13,7 @@ import {
 } from 'antd';
 const { Text, Title } = Typography;
 
-export const FormEmail = ({initialValue}) => {
+export const EmailForm = ({initialValue}) => {
     
     return (
         <Form.Item

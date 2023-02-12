@@ -12,9 +12,9 @@ import {
     AuthLayout, 
     LoginPage, 
     RegistrationPage 
-} from "../Auth";
+} from "../Pages/Auth";
 
-import { HomeLayout } from "../HomeLayout";
+import { HomeLayout } from "../Pages/HomeLayout";
 import { sidebarRouteList, otherRouteList } from "./RouteRegistry";
 
 export const MainRoutes = ({isDarkMode, setIsDarkMode}) => {

@@ -11,7 +11,7 @@ import {
 
 import { sidebarRouteList } from "./RouteRegistry";
 
-import { toTitleCase } from "../../_helper";
+import { toTitleCase } from "../_helper";
 
 const { Text } = Typography;
 

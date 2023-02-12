@@ -16,7 +16,7 @@ import { ThemeContext } from "../../../../App";
 
 import { MockUserTable } from "./MockUserTable";
 
-import { FormEmail } from "../FormInputComp";
+import { EmailForm } from "../FormItems";
 
 const { Text, Title } = Typography;
 
@@ -86,7 +86,7 @@ export const UpdateForms = () => {
                         <Input />
                     </Form.Item>
 
-                    <FormEmail />
+                    <EmailForm />
 
                     <Form.Item
                         style={{

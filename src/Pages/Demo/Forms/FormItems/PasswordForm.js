@@ -14,7 +14,7 @@ import {
 
 const { Text, Title } = Typography;
 
-export const FormPassword = ({withConfirmPassword}) => {
+export const PasswordForm = ({withConfirmPassword}) => {
     
     return (
         <>

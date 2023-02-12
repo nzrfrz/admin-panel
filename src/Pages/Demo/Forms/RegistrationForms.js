@@ -13,7 +13,7 @@ import {
 } from 'antd';
 import { ThemeContext } from "../../../App";
 
-import { FormEmail, FormPassword } from "./FormInputComp";
+import { EmailForm, PasswordForm } from "./FormItems";
 
 const { Text, Title } = Typography;
 
@@ -53,7 +53,7 @@ export const RegistrationForms = () => {
                 }}
                 scrollToFirstError
             >
-                <FormPassword
+                <PasswordForm
                     withConfirmPassword={true}
                 />
 

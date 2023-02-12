@@ -10,7 +10,8 @@ import {
     Divider,
     Form,
     Input,
-    Table
+    Table,
+    Tooltip,
 } from 'antd';
 import {
     EditOutlined
@@ -26,11 +27,11 @@ export const CorpInfoTable = ({corporateData}) => {
 
     const columns = [
         {
-            title: 'Name',
+            title: 'Corporate Name',
             dataIndex: 'corporateName',
             key: 'corporateName',
-            // fixed: "left",
-            width: 500
+            fixed: "left",
+            width: 200
         },
         {
             title: 'Sector',
@@ -46,46 +47,78 @@ export const CorpInfoTable = ({corporateData}) => {
         },
         {
             title: 'Contact',
-            dataIndex: 'corporateContact',
-            key: 'corporateContact',
-            width: 350
+            dataIndex: 'contactNumber',
+            key: 'contactNumber',
+            width: 200
         },
-        // {
-        //     title: 'Email',
-        //     dataIndex: 'corporateEmail',
-        //     key: 'corporateEmail',
-        //     width: 200
-        // },
-        // {
-        //     title: 'Address',
-        //     dataIndex: 'corporateAddress',
-        //     key: 'corporateAddress',
-        //     width: 200
-        // },
-        // {
-        //     title: 'Province',
-        //     dataIndex: 'province',
-        //     key: 'province',
-        //     width: 200
-        // },
-        // {
-        //     title: 'Regency',
-        //     dataIndex: 'regency',
-        //     key: 'regency',
-        //     width: 200
-        // },
-        // {
-        //     title: 'Sub District',
-        //     dataIndex: 'subDistrict',
-        //     key: 'subDistrict',
-        //     width: 200
-        // },
-        // {
-        //     title: 'Village',
-        //     dataIndex: 'village',
-        //     key: 'village',
-        //     width: 200
-        // },
+        {
+            title: 'Email',
+            dataIndex: 'corporateEmail',
+            key: 'corporateEmail',
+            width: 230
+        },
+        {
+            title: 'Address',
+            dataIndex: 'corporateAddress',
+            key: 'corporateAddress',
+            width: 300
+        },
+        {
+            title: 'Province',
+            dataIndex: 'province',
+            key: 'province',
+            width: 100,
+            ellipsis: {
+                showTitle: false,
+            },
+            render: (province) => (
+                <Tooltip placement="topLeft" title={province}>
+                    {province}
+                </Tooltip>
+            ),
+        },
+        {
+            title: 'Regency',
+            dataIndex: 'regency',
+            key: 'regency',
+            width: 100,
+            ellipsis: {
+                showTitle: false,
+            },
+            render: (regency) => (
+                <Tooltip placement="topLeft" title={regency}>
+                    {regency}
+                </Tooltip>
+            ),
+        },
+        {
+            title: 'Sub District',
+            dataIndex: 'subDistrict',
+            key: 'subDistrict',
+            width: 120,
+            ellipsis: {
+                showTitle: false,
+            },
+            render: (subDistrict) => (
+                <Tooltip placement="topLeft" title={subDistrict}>
+                    {subDistrict}
+                </Tooltip>
+            ),
+        },
+        {
+            title: 'Village',
+            dataIndex: 'village',
+            key: 'village',
+            width: 100,
+            ellipsis: {
+                showTitle: false,
+            },
+            render: (village) => (
+                <Tooltip placement="topLeft" title={village}>
+                    {village}
+                </Tooltip>
+            ),
+        },
         {
             title: 'Actions',
             key: 'action',
@@ -114,7 +147,7 @@ export const CorpInfoTable = ({corporateData}) => {
             rowKey={(record) => record.id} 
             columns={columns} 
             dataSource={corporateData}
-            scroll={{ x: 1600 }}
+            scroll={{ x: "100%" }}
         />
     );
 };

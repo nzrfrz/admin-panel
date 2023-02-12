@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { 
     Layout, 
@@ -30,14 +30,12 @@ import {
     TokpedCartDD
 } from "./Demo/_Component";
 
-import { sidebarItems, sidebarItemKeys, BreadCrumb } from "./Routes";
+import { sidebarItems, sidebarItemKeys, BreadCrumb } from "../Routes";
 
 const { Header, Sider, Content, Footer } = Layout;
 const { Text } = Typography;
 
 export const HomeLayout = () => {
-    const contentRef = useRef();
-    console.log(contentRef.current?.clientWidth);
     const location = useLocation();
     const { isDarkMode, setIsDarkMode } = useContext(ThemeContext);
 
@@ -226,9 +224,7 @@ export const HomeLayout = () => {
                 </Header>
                 <BreadCrumb />
                 <Content
-                    ref={contentRef}
                     style={{
-                        "--contentWidth": contentRef.current?.clientWidth,
                         // width: "500px",
                         margin: '12px 16px',
                         background: "transparent",

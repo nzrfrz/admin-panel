@@ -7,11 +7,17 @@ import {
 
 const { Text, Title } = Typography;
 
-export const FormSelect = () => {
+export const GenderSelectForm = () => {
     return (
         <Form.Item
             name="gender" 
-            label="Select"
+            label="Gender"
+            // rules={[
+            //     {
+            //         required: true,
+            //         message: "Gender can not be empty"
+            //     }
+            // ]}
         >
             <Select>
                 <Select.Option value="male">Male</Select.Option>

@@ -16,7 +16,6 @@ import { PlusOutlined } from '@ant-design/icons';
 import { getCorpInfo } from "../../../_services/Demo/corpInfo";
 
 import { CorpInfoTable } from "./CorpInfoTable";
-import { DemoTable } from "./DemoTable";
 
 const { Search } = Input;
 const { Text, Title } = Typography;
@@ -31,6 +30,7 @@ export const Operation = () => {
 
     const {
         token: { 
+            colorSuccessHover,
             borderRadiusLG,
         },
     } = theme.useToken();
@@ -46,7 +46,11 @@ export const Operation = () => {
             <div className="operation-top-section">
                 <div className="button-register-container">
                     <Button
+                        type="default"
                         icon={<PlusOutlined />}
+                        style={{
+                            backgroundColor: colorSuccessHover
+                        }}
                     >
                         Register Corporate
                     </Button>
@@ -57,11 +61,9 @@ export const Operation = () => {
             </div>
             <div className="operation-bottom-section">
                 <Title level={4}>Corporate Data</Title>
-                {/* <Text>Table</Text> */}
-                {/* <CorpInfoTable 
+                <CorpInfoTable 
                     corporateData={corporateData} 
-                /> */}
-                <DemoTable />
+                />
             </div>
         </div>
     );
