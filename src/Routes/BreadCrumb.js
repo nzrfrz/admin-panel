@@ -25,14 +25,14 @@ export const BreadCrumb = () => {
             .filter((data) => data)
             .map((data) => toTitleCase(data));
 
-        const data = tempBreadcrumbData.map((data) => {
+        const data = tempBreadcrumbData.filter((data) => data.length >= 4).map((data) => {
             return {
                 path: data,
                 icon: sidebarRouteList.filter((routeItem) => routeItem.key === data).map((data) => data.icon)[0]
             }
         });
 
-        // console.log(data);
+        // console.log(tempBreadcrumbData.filter((data) => data.length >= 4));
         return data;
     }, [location])
 

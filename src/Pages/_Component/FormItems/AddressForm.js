@@ -1,26 +1,23 @@
 import React from "react";
 import { 
-    theme, 
     Form,
     Input,
-    Typography,
 } from 'antd';
-
-const { Text, Title } = Typography;
 
 export const AddressForm = ({name, label}) => {
     return (
         <Form.Item
             name={name}
             label={label}
-            // rules={[
-            //     {
-            //         required: true,
-            //         message: "Address can not be empty"
-            //     }
-            // ]}
+            rules={[
+                {
+                    required: true,
+                    message: `${label} can not be empty`
+                }
+            ]}
         >
             <Input.TextArea 
+                placeholder="Input Address"
                 autoSize={{
                     minRows: 2
                 }}

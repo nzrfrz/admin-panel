@@ -53,3 +53,14 @@ code {
   margin-right: 6px;
   align-items: center;
 }
+
+.ant-picker-panels {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@media (width < 560px) {
+  div .ant-picker-panels {
+    flex-direction: column;
+  }
+}

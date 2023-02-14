@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { 
     theme,
     Layout, 
@@ -18,6 +19,7 @@ import {
 } from '@ant-design/icons';
 
 export const CorpInfoTable = ({corporateData}) => {
+    const navigateTo = useNavigate();
     
     const {
         token: { 
@@ -133,6 +135,14 @@ export const CorpInfoTable = ({corporateData}) => {
                             backgroundColor: colorWarningHover
                         }}
                         onClick={() => {
+                            navigateTo(
+                                `/operation/edit/${record.id}`, 
+                                {
+                                    state: {
+                                        method: "Edit", 
+                                        data: record
+                                    }
+                                })
                             // form.setFieldsValue({name: record.name, email: record.email});
                             // setSelectedTableRow(record);
                         }}

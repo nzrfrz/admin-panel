@@ -1,12 +1,8 @@
 import React from "react";
 import { 
-    Typography,
     Form,
-    Select,
     InputNumber,
 } from 'antd';
-
-const { Text, Title } = Typography;
 
 export const SimpleNumberForm = ({name, label}) => {
     return (

@@ -20,17 +20,14 @@ import {
     LayoutTwo,
     LayoutThree,
 
-    RegistrationForms,
-    UpdateForms, 
-    SplitForm,
-
     ChatPage,
     DiscussionPage,
     ReviewPage,
     HelpPage,
     ComplainPages,
 
-    Operation
+    Operation,
+    OperationForm,
 } from "../Pages/Demo";
 
 // Edit here to create new sidebar route
@@ -87,40 +84,32 @@ export const sidebarRouteList = [
             },
         ]
     },
-    {
-        key: "Forms",
-        label: "Forms",
-        path: "/forms",
-        isIndex: false,
-        element: null,
-        icon: <FaWpforms />,
-        children: [
-            {
-                key: "Registration Forms",
-                label: <Link to="/forms/registration_forms" ><RxDot/>Registration Forms</Link>,
-                path: "/forms/registration_forms",
-                element: <RegistrationForms />,
-                icon: null,
-                children: null
-            },
-            // {
-            //     key: "Update Forms",
-            //     label: <Link to="/forms/update_forms" ><RxDot/>Update Forms</Link>,
-            //     path: "/forms/update_forms",
-            //     element: <UpdateForms />,
-            //     icon: null,
-            //     children: null
-            // },
-            {
-                key: "Split Forms",
-                label: <Link to="/forms/split_forms" ><RxDot/>Split Forms</Link>,
-                path: "/forms/split_forms",
-                element: <SplitForm />,
-                icon: null,
-                children: null
-            },
-        ],
-    },
+    // {
+    //     key: "Forms",
+    //     label: "Forms",
+    //     path: "/forms",
+    //     isIndex: false,
+    //     element: null,
+    //     icon: <FaWpforms />,
+    //     children: [
+    //         {
+    //             key: "Registration Forms",
+    //             label: <Link to="/forms/registration_forms" ><RxDot/>Registration Forms</Link>,
+    //             path: "/forms/registration_forms",
+    //             element: <RegistrationForms />,
+    //             icon: null,
+    //             children: null
+    //         },
+    //         {
+    //             key: "Split Forms",
+    //             label: <Link to="/forms/split_forms" ><RxDot/>Split Forms</Link>,
+    //             path: "/forms/split_forms",
+    //             element: <SplitForm />,
+    //             icon: null,
+    //             children: null
+    //         },
+    //     ],
+    // },
     {
         key: "Operation",
         label: <Link to="/operation" >Operation</Link>,
@@ -175,6 +164,24 @@ export const otherRouteList = [
         path: "/complain",
         isIndex: false,
         element: <ComplainPages />,
+        icon: null,
+        children: [],
+    },
+    {
+        key: "Operation Registration",
+        label: null,
+        path: "/operation/registration",
+        isIndex: false,
+        element: <OperationForm />,
+        icon: null,
+        children: [],
+    },
+    {
+        key: "Operation Edit",
+        label: null,
+        path: "/operation/edit/:id",
+        isIndex: false,
+        element: <OperationForm />,
         icon: null,
         children: [],
     },

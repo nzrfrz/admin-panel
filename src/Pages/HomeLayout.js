@@ -15,7 +15,7 @@ import {
     UserOutlined,
 } from '@ant-design/icons';
 
-import { ThemeContext } from "../App";
+import { GlobalContext } from "../App";
 
 import { MenuBurger } from "./_Component/MenuBurger";
 
@@ -37,7 +37,7 @@ const { Text } = Typography;
 
 export const HomeLayout = () => {
     const location = useLocation();
-    const { isDarkMode, setIsDarkMode } = useContext(ThemeContext);
+    const { isDarkMode, setIsDarkMode } = useContext(GlobalContext);
 
     const [collapsed, setCollapsed] = useState(false);
     const [isShrink, setIsShrink] = useState(false);

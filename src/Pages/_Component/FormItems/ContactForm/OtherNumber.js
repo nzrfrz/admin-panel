@@ -1,38 +1,27 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React from "react";
 import { 
-    theme, 
     Form,
     Input,
-    Typography,
-    Select,
     InputNumber
 } from 'antd';
 
-import { getDialCode } from "../../../../../_services/dialCodeData";
-
-const { Option } = Select;
-
 export const OtherNumber = ({name, label}) => {
-    const [dialCode, setDialCode] = useState([]);
-
-    useEffect(() => {
-        getDialCode(setDialCode);
-    }, []);
 
     return (
         <Form.Item
-        label={label}
+            label={label}
+            required={true}
         >
             <Input.Group compact>
                 <Form.Item
                     name={[name, 'areaCode']}
                     noStyle
-                    // rules={[
-                    //     {
-                    //         required: true,
-                    //         message: 'Area Code can not be empty',
-                    //     },
-                    // ]}
+                    rules={[
+                        {
+                            required: true,
+                            message: "",
+                        },
+                    ]}
                 >
                     <InputNumber
                         controls={false}
@@ -45,16 +34,16 @@ export const OtherNumber = ({name, label}) => {
                 <Form.Item
                     noStyle
                     name={[name, 'phoneNumber']}
-                    // rules={[
-                    //     {
-                    //         required: true,
-                    //         message: 'Phone Number can not be empty',
-                    //     },
-                    // ]}
+                    rules={[
+                        {
+                            required: true,
+                            message: `Area Code or ${label} can not be empty`,
+                        },
+                    ]}
                 >
                     <InputNumber
                         controls={false}
-                        placeholder="Input Phone Number"
+                        placeholder={`Input ${label}`}
                         style={{
                             width: '70%',
                         }}

@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import { ThemeContext } from "../../../App";
+import { GlobalContext } from "../../../App";
 import { theme, Typography } from "antd";
 
 const { Text, Title } = Typography;
 
 export const LayoutTwo = () => {
-    const { isDarkMode } = useContext(ThemeContext);
+    const { isDarkMode } = useContext(GlobalContext);
 
     const {
         token: { 

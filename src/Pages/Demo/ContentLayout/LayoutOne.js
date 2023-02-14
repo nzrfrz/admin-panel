@@ -6,7 +6,7 @@ import {
     Typography,
 } from "antd";
 
-import { ThemeContext } from "../../../App";
+import { GlobalContext } from "../../../App";
 
 import { PlusOutlined } from '@ant-design/icons';
 
@@ -14,7 +14,7 @@ const { Text, Title } = Typography;
 const { Search } = Input;
 
 export const LayoutOne = () => {
-    const { isDarkMode } = useContext(ThemeContext);
+    const { isDarkMode } = useContext(GlobalContext);
 
     const {
         token: { 

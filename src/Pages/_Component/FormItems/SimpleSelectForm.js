@@ -1,11 +1,8 @@
 import React from "react";
 import { 
-    Typography,
     Form,
     Select,
 } from 'antd';
-
-const { Text, Title } = Typography;
 
 export const SimpleSelectForm = ({name, label, optionSelect}) => {
     return (

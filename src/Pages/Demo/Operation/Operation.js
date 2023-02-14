@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ThemeContext } from "../../../App";
+import { GlobalContext } from "../../../App";
 import { 
     theme,
     Layout, 
@@ -21,7 +21,8 @@ const { Search } = Input;
 const { Text, Title } = Typography;
 
 export const Operation = () => {
-    const { isDarkMode } = useContext(ThemeContext);
+    const navigateTo = useNavigate();
+    const { isDarkMode } = useContext(GlobalContext);
     const [corporateData, setCorporateData] = useState([]);
 
     useEffect(() => {
@@ -50,6 +51,9 @@ export const Operation = () => {
                         icon={<PlusOutlined />}
                         style={{
                             backgroundColor: colorSuccessHover
+                        }}
+                        onClick={() => {
+                            navigateTo(`/operation/registration`, {state: {method: "Registration"}});
                         }}
                     >
                         Register Corporate

@@ -7,7 +7,7 @@ import {
     Typography, 
 } from "antd";
 
-import { ThemeContext } from "../../../../App";
+import { GlobalContext } from "../../../../App";
 
 import { 
     FaBell,
@@ -28,7 +28,7 @@ const { Text } = Typography;
 
 export const TokpedProfileDD = () => {
     const navigate = useNavigate();
-    const { setIsDarkMode } = useContext(ThemeContext);
+    const { setIsDarkMode } = useContext(GlobalContext);
 
     const [openDD, setOpenDD] = useState(false);
 

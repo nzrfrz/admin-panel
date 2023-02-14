@@ -1,18 +1,8 @@
 import React from "react";
 import { 
-    theme,
-    Layout, 
-    Menu, 
-    Typography, 
-    Breadcrumb, 
-    Dropdown,
-    Button,
-    Divider,
     Form,
     Input,
 } from 'antd';
-
-const { Text, Title } = Typography;
 
 export const PasswordForm = ({withConfirmPassword}) => {
     
@@ -21,7 +11,6 @@ export const PasswordForm = ({withConfirmPassword}) => {
         <Form.Item
             name="password"
             label="Password"
-            // initialValue={initialValue?.length > 0 ? initialValue : undefined}
             rules={[
                 {
                     required: true,

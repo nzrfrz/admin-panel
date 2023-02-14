@@ -1,11 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { 
-    theme, 
-    Form,
-    Input,
-    Typography,
-    Select
-} from 'antd';
+import React from "react";
 
 import { MobileNumber } from "./MobileNumber";
 import { OtherNumber } from "./OtherNumber";

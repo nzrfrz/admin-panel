@@ -7,7 +7,7 @@ import {
     Typography,
 } from 'antd';
 
-import { getIndonesiaRegionData } from "../../../../_services/regionData";
+import { getIndonesiaRegionData } from "../../../_services/regionData";
 
 const { Text, Title } = Typography;
 

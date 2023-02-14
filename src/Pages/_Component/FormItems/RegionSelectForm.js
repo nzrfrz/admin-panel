@@ -1,15 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { 
-    theme, 
     Form,
-    Input,
-    Typography,
     Select
 } from 'antd';
 
-import { getIndonesiaRegionData } from "../../../../_services/regionData";
+import { getIndonesiaRegionData } from "../../../_services/regionData";
 
-export const RegionSelectForm = ({form, fullRegion}) => {
+export const RegionSelectForm = ({formProps, fullRegion}) => {
     const [isLoading, setIsLoading] = useState(false);
     const [regionData, setRegionData] = useState([]);
     const [parentData, setParentData] = useState([]);
@@ -71,12 +68,12 @@ export const RegionSelectForm = ({form, fullRegion}) => {
         <Form.Item
             name="province"
             label="Province"
-            // rules={[
-            //     {
-            //         required: true,
-            //         message: "Address region can not be empty"
-            //     }
-            // ]}
+            rules={[
+                {
+                    required: true,
+                    message: "Province can not be empty"
+                }
+            ]}
         >
             <Select
                 showSearch
@@ -86,9 +83,9 @@ export const RegionSelectForm = ({form, fullRegion}) => {
                 optionFilterProp="children"
                 filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
                 onClear={() => {
-                    form.resetFields(["regency"]);
-                    form.resetFields(["subDistrict"]);
-                    form.resetFields(["village"]);
+                    formProps.resetFields(["regency"]);
+                    formProps.resetFields(["subDistrict"]);
+                    formProps.resetFields(["village"]);
                     setSelectedProvince(undefined);
                     setSelectedRegency(undefined);
                     setSelectedSubDistrict(undefined);
@@ -113,12 +110,12 @@ export const RegionSelectForm = ({form, fullRegion}) => {
                         <Form.Item
                             name="regency"
                             label="Regency"
-                            // rules={[
-                            //     {
-                            //         required: true,
-                            //         message: "Address region can not be empty"
-                            //     }
-                            // ]}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Regency can not be empty"
+                                }
+                            ]}
                         >
                             <Select
                                 showSearch
@@ -128,8 +125,8 @@ export const RegionSelectForm = ({form, fullRegion}) => {
                                 optionFilterProp="children"
                                 filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
                                 onClear={() => {
-                                    form.resetFields(["subDistrict"]);
-                                    form.resetFields(["village"]);
+                                    formProps.resetFields(["subDistrict"]);
+                                    formProps.resetFields(["village"]);
                                     setSelectedRegency(undefined);
                                 }}
                                 onChange={(value, data) => {
@@ -155,12 +152,12 @@ export const RegionSelectForm = ({form, fullRegion}) => {
                         <Form.Item
                             name="subDistrict"
                             label="Sub District"
-                            // rules={[
-                            //     {
-                            //         required: true,
-                            //         message: "Address region can not be empty"
-                            //     }
-                            // ]}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Sub District can not be empty"
+                                }
+                            ]}
                         >
                             <Select
                                 showSearch
@@ -170,7 +167,7 @@ export const RegionSelectForm = ({form, fullRegion}) => {
                                 optionFilterProp="children"
                                 filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
                                 onClear={() => {
-                                    form.resetFields(["village"]);
+                                    formProps.resetFields(["village"]);
                                     setSelectedSubDistrict(undefined);
                                 }}
                                 onChange={(value, data) => {
@@ -196,12 +193,12 @@ export const RegionSelectForm = ({form, fullRegion}) => {
                         <Form.Item
                             name="village"
                             label="Village"
-                            // rules={[
-                            //     {
-                            //         required: true,
-                            //         message: "Address region can not be empty"
-                            //     }
-                            // ]}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Village can not be empty"
+                                }
+                            ]}
                         >
                             <Select
                                 showSearch
