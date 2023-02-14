@@ -97,7 +97,7 @@ export const RegionSelectForm = ({formProps, fullRegion}) => {
         </Form.Item>
 
         {
-            fullRegion === true &&
+            fullRegion === true || fullRegion === undefined &&
             <>
             {/* regency */}
             <Form.Item

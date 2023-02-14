@@ -21,6 +21,8 @@ import { GlobalContext } from "../../../App";
 import { 
     AddressForm,
     ContactForm,
+    CurrencyForm,
+    DateRangeForm,
     DOBForm,
     EmailForm,
     GenderSelectForm,
@@ -55,7 +57,18 @@ export const OperationForm = () => {
     // console.log(notificationOpen());
     // function to get or filter or further manipulation form data
     const onFinish = (values) => {
-        console.log(values);
+        const temp = {
+            ...values,
+            "contactNumber": values.contactNumber.areaCode.toString() + values.contactNumber.phoneNumber.toString(),
+            "startDate": values.rangePicker[0].format("YYYY-MM-DD"),
+            "endDate": values.rangePicker[1].format("YYYY-MM-DD"),
+            "currency": values.currency.toString(),
+        }
+
+        const { rangePicker, password, ...newTemp } = temp;
+        console.log("FORM VALUE: ", values);
+        console.log("TEMP VALUE: ", temp);
+        console.log("NEW TEMP VALUE: ", newTemp);
     };
 
     /**
@@ -126,7 +139,44 @@ export const OperationForm = () => {
                     }}
                     scrollToFirstError
                 >
-                                       
+                    <ContactForm 
+                        name="contactNumber"
+                        label="Phone Number"
+                        isMobileNumber={false}
+                    /> 
+                    <PasswordForm 
+                        withConfirmPassword={false}
+                    />
+                    <DateRangeForm 
+                        name="rangePicker"
+                        label="Range Picker"
+                    />
+                    <RegionSelectForm 
+                        formProps={form}
+                    />
+                    <CurrencyForm 
+                        name="currency"
+                        label="Harga"
+                        prefix="IDIN"
+                    />
+                    <SimpleSelectForm 
+                        name="fruit"
+                        label="Select Fruit"
+                        optionSelect={[
+                            {
+                                label: "Mangga",
+                                value: "mangga",
+                            },
+                            {
+                                label: "Jambu",
+                                value: "jambu"
+                            },
+                            {
+                                label: "Duren",
+                                value: "duren"
+                            }
+                        ]}
+                    />
                 </Form>
             </div>
             <div
