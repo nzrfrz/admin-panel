@@ -2,6 +2,7 @@
 
 @import url(./_css/authPage.css);
 @import url(./_css/homeLayout.css);
+@import url(./_css/layout.css);
 
 @import url(./_css/demo/tokpedProfileDD.css);
 @import url(./_css/demo/multiInboxDD.css);
@@ -12,7 +13,6 @@
 @import url(./_css/demo/tokpedCartDD.css);
 
 @import url(./_css/demo/menuBurger.css);
-@import url(./_css/demo/layout.css);
 @import url(./_css/demo/forms.css);
 @import url(./_css/demo/operation.css);
 
@@ -58,6 +58,58 @@ code {
   display: flex;
   flex-wrap: wrap;
 }
+
+/*#region ---------- button success ---------- */
+.button-success {
+  box-shadow: 2px 2px 3px 0px rgba(0, 126, 51, 0.75);
+  transition: all 0.2s;
+}
+
+.button-success:active {
+  transform: scale(0.95);
+  box-shadow: 0px 0px 0px 0px rgba(0, 126, 51, 0.75);
+  transition: all 0.2s;
+}
+/*#endregion ---------- button success ---------- */
+
+/*#region ---------- button error ---------- */
+.button-error {
+  box-shadow: 2px 2px 3px 0px rgba(204, 0, 0, 0.75);
+  transition: all 0.2s;
+}
+
+.button-error:active {
+  transform: scale(0.95);
+  box-shadow: 0px 0px 0px 0px rgba(204, 0, 0, 0.75);
+  transition: all 0.2s;
+}
+/*#endregion ---------- button error ---------- */
+
+/*#region ---------- button warning ---------- */
+.button-warning {
+  box-shadow: 2px 2px 3px 0px rgba(255, 136, 0, 0.75);
+  transition: all 0.2s;
+}
+
+.button-warning:active {
+  transform: scale(0.95);
+  box-shadow: 0px 0px 0px 0px rgba(255, 136, 0, 0.75);
+  transition: all 0.2s;
+}
+/*#endregion ---------- button warning ---------- */
+
+/*#region ---------- button info ---------- */
+.button-info {
+  box-shadow: 2px 2px 3px 0px rgba(0, 153, 204, 0.75);
+  transition: all 0.2s;
+}
+
+.button-info:active {
+  transform: scale(0.95);
+  box-shadow: 0px 0px 0px 0px rgba(0, 153, 204, 0.75);
+  transition: all 0.2s;
+}
+/*#endregion ---------- button info ---------- */
 
 @media (width < 560px) {
   div .ant-picker-panels {

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { GlobalContext } from "../../../App";
+import { GlobalContext } from "../../../../App";
 import { 
     theme,
     Layout, 
@@ -13,14 +13,17 @@ import {
     Input,
 } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { getCorpInfo } from "../../../_services/Demo/corpInfo";
+
+import { getCorpInfo } from "../../../../_services/Demo/corpInfo";
 
 import { CorpInfoTable } from "./CorpInfoTable";
+
+import { ButtonInfo } from "../../../_Component";
 
 const { Search } = Input;
 const { Text, Title } = Typography;
 
-export const Operation = () => {
+export const ComplexOperation = () => {
     const navigateTo = useNavigate();
     const { isDarkMode } = useContext(GlobalContext);
     const [corporateData, setCorporateData] = useState([]);
@@ -31,7 +34,6 @@ export const Operation = () => {
 
     const {
         token: { 
-            colorSuccessHover,
             borderRadiusLG,
         },
     } = theme.useToken();
@@ -46,18 +48,13 @@ export const Operation = () => {
         >
             <div className="operation-top-section">
                 <div className="button-register-container">
-                    <Button
-                        type="default"
+                    <ButtonInfo 
+                        text="Register Corporate"
                         icon={<PlusOutlined />}
-                        style={{
-                            backgroundColor: colorSuccessHover
-                        }}
                         onClick={() => {
-                            navigateTo(`/operation/registration`, {state: {method: "Registration"}});
+                            navigateTo(`/operation/complex/registration`, {state: {method: "Registration"}});
                         }}
-                    >
-                        Register Corporate
-                    </Button>
+                    />
                 </div>
                 <div className="search-container">
                     <Search placeholder="Search Something?" enterButton />

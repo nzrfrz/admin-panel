@@ -25,7 +25,7 @@ export const LayoutOne = () => {
 
     return (
         <div 
-            className="layout-one-container"
+            className="two-row-layout-container"
             style={{
                 "--bgc": isDarkMode === true ? "var(--contentContainerDarkMode)" : "var(--contentContainerLightMode)"
             }}

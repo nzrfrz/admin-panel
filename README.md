@@ -9,6 +9,7 @@ Admin panel with reactJS and Ant Design V5 ui library.
 - react-icons 4.7.1
 - react-router-dom 6.8.0
 - react-country-flag 3.0.2
+- @tanstack/react-query 4.24.10
 
 ## How To Use
 ### Run The Project

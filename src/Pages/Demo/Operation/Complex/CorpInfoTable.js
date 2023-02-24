@@ -1,16 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { 
-    theme,
-    Layout, 
-    Menu, 
-    Typography, 
-    Breadcrumb, 
-    Dropdown,
-    Button,
-    Divider,
-    Form,
-    Input,
     Table,
     Tooltip,
 } from 'antd';
@@ -18,14 +8,10 @@ import {
     EditOutlined
 } from '@ant-design/icons';
 
+import { ButtonWarning } from "../../../_Component";
+
 export const CorpInfoTable = ({corporateData}) => {
     const navigateTo = useNavigate();
-    
-    const {
-        token: { 
-            colorWarningHover
-        },
-    } = theme.useToken();
 
     const columns = [
         {
@@ -128,23 +114,17 @@ export const CorpInfoTable = ({corporateData}) => {
             width: 200,
             render: (_, record) => (
                 <div className="table-action-button-container">
-                    <Button
-                        type="primary"
+                    <ButtonWarning 
                         icon={<EditOutlined />}
-                        style={{
-                            backgroundColor: colorWarningHover
-                        }}
                         onClick={() => {
                             navigateTo(
-                                `/operation/edit/${record.id}`, 
+                                `/operation/complex/edit`, 
                                 {
                                     state: {
                                         method: "Edit", 
                                         data: record
                                     }
                                 })
-                            // form.setFieldsValue({name: record.name, email: record.email});
-                            // setSelectedTableRow(record);
                         }}
                     />
                 </div>

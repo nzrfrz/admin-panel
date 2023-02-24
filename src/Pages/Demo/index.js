@@ -11,5 +11,6 @@ export * from "./Inbox/ReviewPage";
 export * from "./Inbox/HelpPage";
 export * from "./Inbox/ComplainPage";
 
-export * from "./Operation/Operation";
-export * from "./Operation/OperationForm";
+export * from "./Operation/Simple/SimpleOperation";
+export * from "./Operation/Complex/ComplexOperation";
+export * from "./Operation/Complex/ComplexOperationForm";

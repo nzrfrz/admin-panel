@@ -15,7 +15,7 @@ export const LayoutThree = () => {
 
     return (
         <div 
-            className="layout-three-container"
+            className="one-row-three-col-layout-container"
             style={{
                 "--brRd": `${borderRadiusLG}px`,
                 "--bgc": isDarkMode === true ? "var(--contentContainerDarkMode)" : "var(--contentContainerLightMode)"

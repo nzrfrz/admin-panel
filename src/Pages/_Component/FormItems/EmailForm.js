@@ -13,12 +13,12 @@ import {
 } from 'antd';
 const { Text, Title } = Typography;
 
-export const EmailForm = () => {
+export const EmailForm = ({name, label}) => {
     
     return (
         <Form.Item
-            name="email"
-            label="E-mail"
+            name={name}
+            label={label}
             rules={[
                 {
                     type: 'email',

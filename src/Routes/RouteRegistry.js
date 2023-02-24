@@ -26,8 +26,9 @@ import {
     HelpPage,
     ComplainPages,
 
-    Operation,
-    OperationForm,
+    SimpleOperation,
+    ComplexOperation,
+    ComplexOperationForm,
 } from "../Pages/Demo";
 
 // Edit here to create new sidebar route
@@ -84,40 +85,31 @@ export const sidebarRouteList = [
             },
         ]
     },
-    // {
-    //     key: "Forms",
-    //     label: "Forms",
-    //     path: "/forms",
-    //     isIndex: false,
-    //     element: null,
-    //     icon: <FaWpforms />,
-    //     children: [
-    //         {
-    //             key: "Registration Forms",
-    //             label: <Link to="/forms/registration_forms" ><RxDot/>Registration Forms</Link>,
-    //             path: "/forms/registration_forms",
-    //             element: <RegistrationForms />,
-    //             icon: null,
-    //             children: null
-    //         },
-    //         {
-    //             key: "Split Forms",
-    //             label: <Link to="/forms/split_forms" ><RxDot/>Split Forms</Link>,
-    //             path: "/forms/split_forms",
-    //             element: <SplitForm />,
-    //             icon: null,
-    //             children: null
-    //         },
-    //     ],
-    // },
     {
         key: "Operation",
-        label: <Link to="/operation" >Operation</Link>,
+        label: "Operation",
         path: "/operation",
         isIndex: false,
-        element: <Operation />,
+        element: null,
         icon: <RiKnifeLine />,
-        children: [],
+        children: [
+            {
+                key: "Simple",
+                label: <Link to="/operation/simple" ><RxDot/>Simple Operation</Link>,
+                path: "/operation/simple",
+                element: <SimpleOperation />,
+                icon: null,
+                children: null
+            },
+            {
+                key: "Complex",
+                label: <Link to="/operation/complex" ><RxDot/>Complex Operation</Link>,
+                path: "/operation/complex",
+                element: <ComplexOperation />,
+                icon: null,
+                children: null
+            },
+        ],
     },
 ];
 
@@ -170,18 +162,9 @@ export const otherRouteList = [
     {
         key: "Operation Registration",
         label: null,
-        path: "/operation/registration",
+        path: "/operation/complex/:method",
         isIndex: false,
-        element: <OperationForm />,
-        icon: null,
-        children: [],
-    },
-    {
-        key: "Operation Edit",
-        label: null,
-        path: "/operation/edit/:id",
-        isIndex: false,
-        element: <OperationForm />,
+        element: <ComplexOperationForm />,
         icon: null,
         children: [],
     },

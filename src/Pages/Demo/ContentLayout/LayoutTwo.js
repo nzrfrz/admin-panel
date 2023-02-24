@@ -15,7 +15,7 @@ export const LayoutTwo = () => {
 
     return (
         <div 
-            className="layout-two-container"
+            className="three-col-layout-container"
             style={{
                 "--brRd": `${borderRadiusLG}px`,
                 "--bgc": isDarkMode === true ? "var(--contentContainerDarkMode)" : "var(--contentContainerLightMode)"

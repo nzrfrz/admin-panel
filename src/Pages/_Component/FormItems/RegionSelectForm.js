@@ -1,23 +1,61 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import { 
     Form,
     Select
 } from 'antd';
+import { GlobalContext } from "../../../App";
 
 import { getIndonesiaRegionData } from "../../../_services/regionData";
+import { useQuery } from "@tanstack/react-query";
+import { openNotification } from "../openNotification";
 
-export const RegionSelectForm = ({formProps, fullRegion}) => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [regionData, setRegionData] = useState([]);
-    const [parentData, setParentData] = useState([]);
+export const RegionSelectForm = ({formProps, name, fullRegion}) => {
+    const { apiNotif } = useContext(GlobalContext);
 
     const [selectedProvince, setSelectedProvince] = useState(undefined);
     const [selectedRegency, setSelectedRegency] = useState(undefined);
     const [selectedSubDistrict, setSelectedSubDistrict] = useState(undefined);
 
+    const { data } = useQuery({
+        queryKey: ["indonesiaRegionData"],
+        queryFn: getIndonesiaRegionData,
+        staleTime: 60000,
+        onError: (error) => {
+            openNotification(apiNotif, "indonesiaRegionData", "error", error.response.data, "Province data couldn't be load, please refresh your browser");
+        }
+    });
+
+    const formName = useMemo(() => {
+        const provinceName = name === undefined ? "province" : `${name}Province`;
+        const regencyName = name === undefined ? "regency" : `${name}Regency`;
+        const subDistrictName = name === undefined ? "subDistrict" : `${name}SubDistrict`;
+        const villageName = name === undefined ? "village" : `${name}Village`;
+
+        return {
+            provinceName,
+            regencyName,
+            subDistrictName,
+            villageName
+        }
+    }, [name]);
+
+    const provinceData = useMemo(() => {
+        if (data !== undefined) {
+            return data.filter((data) => data.type === "Provinsi")
+                        .map((dataProvince) => {
+                            return {
+                                value: dataProvince.name,
+                                label: dataProvince.name,
+                                code: dataProvince.kode,
+                                type: dataProvince.type,
+                            }
+                        });
+        }
+    }, [data]);
+
     const regencyData = useMemo(() => {
         if (selectedProvince !== undefined) {
-            return regionData.filter((data) => data.kodeProvinsi === selectedProvince)
+            return data.filter((data) => data.kodeProvinsi === selectedProvince)
                     .map((dataRegency) => {
                         return {
                             value: dataRegency.name,
@@ -31,7 +69,7 @@ export const RegionSelectForm = ({formProps, fullRegion}) => {
 
     const subDistrictData = useMemo(() => {
         if (selectedRegency !== undefined) {
-            return regionData.filter((data) => data.kodeKabupaten === selectedRegency)
+            return data.filter((data) => data.kodeKabupaten === selectedRegency)
                     .map((dataSubDistrict) => {
                         return {
                             value: dataSubDistrict.name,
@@ -45,7 +83,7 @@ export const RegionSelectForm = ({formProps, fullRegion}) => {
 
     const villageData = useMemo(() => {
         if (selectedSubDistrict !== undefined) {
-            return regionData.filter((data) => data.kodeKecamatan === selectedSubDistrict)
+            return data.filter((data) => data.kodeKecamatan === selectedSubDistrict)
                     .map((dataVillage) => {
                         return {
                             value: dataVillage.name,
@@ -57,16 +95,10 @@ export const RegionSelectForm = ({formProps, fullRegion}) => {
         }
     }, [selectedSubDistrict]);
 
-    // console.log(villageData);
-
-    useEffect(() => {
-        getIndonesiaRegionData(setIsLoading, setRegionData, setParentData);
-    }, []);
-
     return (
         <>
         <Form.Item
-            name="province"
+            name={formName.provinceName}
             label="Province"
             rules={[
                 {
@@ -78,7 +110,9 @@ export const RegionSelectForm = ({formProps, fullRegion}) => {
             <Select
                 showSearch
                 allowClear
-                options={parentData}
+                loading={data === undefined ? true : false}
+                disabled={data === undefined ? true : false}
+                options={provinceData}
                 placeholder="Select Province"
                 optionFilterProp="children"
                 filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
@@ -97,7 +131,9 @@ export const RegionSelectForm = ({formProps, fullRegion}) => {
         </Form.Item>
 
         {
-            fullRegion === true || fullRegion === undefined &&
+            fullRegion === false ?
+            null
+            :
             <>
             {/* regency */}
             <Form.Item
@@ -106,9 +142,9 @@ export const RegionSelectForm = ({formProps, fullRegion}) => {
             >
                 {
                     (({getFieldValue}) => 
-                        getFieldValue("province") !== undefined ?
+                        getFieldValue(formName.provinceName) !== undefined ?
                         <Form.Item
-                            name="regency"
+                            name={formName.regencyName}
                             label="Regency"
                             rules={[
                                 {
@@ -148,9 +184,9 @@ export const RegionSelectForm = ({formProps, fullRegion}) => {
             >
                 {
                     (({getFieldValue}) => 
-                        getFieldValue("regency") !== undefined ?
+                        getFieldValue(formName.regencyName) !== undefined ?
                         <Form.Item
-                            name="subDistrict"
+                            name={formName.subDistrictName}
                             label="Sub District"
                             rules={[
                                 {
@@ -189,9 +225,9 @@ export const RegionSelectForm = ({formProps, fullRegion}) => {
             >
                 {
                     (({getFieldValue}) => 
-                        getFieldValue("subDistrict") !== undefined ?
+                        getFieldValue(formName.subDistrictName) !== undefined ?
                         <Form.Item
-                            name="village"
+                            name={formName.villageName}
                             label="Village"
                             rules={[
                                 {

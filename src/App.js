@@ -1,10 +1,13 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { ConfigProvider, theme, notification } from 'antd';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { themeToken } from './themeToken';
 
 import { MainRoutes } from './Routes';
 
 export const GlobalContext = createContext();
+
+const queryClient = new QueryClient();
 
 function App() {
   const { defaultAlgorithm, darkAlgorithm } = theme;
@@ -34,8 +37,10 @@ function App() {
           apiNotif
         }}
       >
-        {contextHolder}
-        <MainRoutes />
+        <QueryClientProvider client={queryClient}>
+          {contextHolder}
+          <MainRoutes />
+        </QueryClientProvider>
       </GlobalContext.Provider>
     </ConfigProvider>
   );

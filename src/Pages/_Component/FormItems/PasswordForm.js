@@ -19,7 +19,9 @@ export const PasswordForm = ({withConfirmPassword}) => {
             ]}
             hasFeedback
         >
-            <Input.Password />
+            <Input.Password 
+                placeholder="Input Password"
+            />
         </Form.Item>
         
         {
@@ -46,7 +48,9 @@ export const PasswordForm = ({withConfirmPassword}) => {
                     }),
                 ]}
             >
-                <Input.Password />
+                <Input.Password 
+                    placeholder="Retype Password"
+                />
           </Form.Item>
         }
         </>
