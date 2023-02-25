@@ -1,46 +1,42 @@
 import React, { useContext, useMemo } from "react";
 import { GlobalContext } from "../../../../App";
-import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 
 import { 
     Table,
-    Modal,
-    Tooltip,
     Typography,
 } from 'antd';
 import {
     EditOutlined
 } from '@ant-design/icons';
 
-import { openNotification, ButtonWarning } from "../../../_Component";
-import { getUserProfile } from "../../../../_services";
+import { ButtonWarning, TableButtonDelete } from "../../../_Component";
+import { 
+    getUserProfile, 
+    deleteUserProfile, 
+    useQueryData, 
+    useMutateData 
+} from "../../../../_services";
 
 import { getAge } from "../../../../_helper";
 
 const { Text } = Typography;
 
-export const UserProfileTable = ({setIsModalFormOpen, setHTTPMethod, formProps}) => {
+export const UserProfileTable = ({setIsModalFormOpen, setHTTPMethod, formProps, setEditedDataRow}) => {
     const { apiNotif } = useContext(GlobalContext);
 
-    const { data } = useQuery({
-        queryKey: ["userProfile"],
-        queryFn: getUserProfile,
-        staleTime: 60000,
-        onError: (error) => {
-            openNotification(apiNotif, "userProfile", "error", error.response.data, "User Profile data couldn't be load, please refresh your browser");
-        }
-    });
+    const queryData = useQueryData(["userProfile"], getUserProfile, apiNotif);
+    const mutateData = useMutateData("delete", deleteUserProfile, ["userProfile"], undefined, apiNotif);
 
     const userProfileData = useMemo(() => {
-        return data?.reverse().map((data) => {
+        return queryData.data?.map((data) => {
             return {
                 ...data,
                 dateOfBirth: dayjs(data.dateOfBirth).format("MMMM DD, YYYY"),
                 age: getAge(dayjs(data.dateOfBirth).format("YYYY-MM-DD"))
             }
         })
-    }, [data]);
+    }, [queryData.data]);
 
     // console.log(userProfileData);
 
@@ -117,7 +113,8 @@ export const UserProfileTable = ({setIsModalFormOpen, setHTTPMethod, formProps})
                         icon={<EditOutlined />}
                         onClick={() => {
                             setIsModalFormOpen(true);
-                            setHTTPMethod("Edit");
+                            setHTTPMethod("put");
+                            setEditedDataRow(record);
                             formProps.setFieldsValue({
                                 name: record.name,
                                 dateOfBirth: dayjs(record.dateOfBirth),
@@ -131,8 +128,13 @@ export const UserProfileTable = ({setIsModalFormOpen, setHTTPMethod, formProps})
                                 zipCode: Number(record.zipCode),
                                 userName: record.userName,
                                 email: record.email
-
                             });
+                        }}
+                    />
+                    <TableButtonDelete 
+                        rowData={record.name}
+                        onClick={() => {
+                            mutateData.mutateAsync(record.id);
                         }}
                     />
                 </div>
@@ -142,10 +144,10 @@ export const UserProfileTable = ({setIsModalFormOpen, setHTTPMethod, formProps})
 
     return (
         <Table 
-            // loading={true}
+            loading={queryData.isLoading || queryData.isRefetching}
             rowKey={(record) => record.id} 
             columns={columns} 
-            dataSource={userProfileData}
+            dataSource={userProfileData?.reverse()}
             scroll={{ x: "100%" }}
         />
     );

@@ -38,6 +38,7 @@ import {
 import { ContractForm } from "./ContractInfoForm/ContractForm";
 
 import { postService } from "../../../../_services/postService";
+import { useMutateData } from "../../../../_services";
 
 const { Text, Title } = Typography;
 
@@ -70,6 +71,7 @@ const channelData = [
 ];
 
 export const ComplexOperationForm = () => {
+    const navigateTo = useNavigate();
     const {state} = useLocation(); // get value passing from navigateTo() in other page inside "state" object
     const lastContainerRef = useRef(); // ref to pass in last container div
     const { isDarkMode, apiNotif } = useContext(GlobalContext); // get site theme mode from App.js
@@ -129,7 +131,8 @@ export const ComplexOperationForm = () => {
 
         // console.log(contractInfo);
         // const { contractActiveDate, ...newFormData } = formData;
-        postService(values, apiNotif);
+        // postService(values, apiNotif);
+        // useMutateData(values, form, apiNotif, undefined, navigateTo);
     };
 
     /**
@@ -232,9 +235,6 @@ export const ComplexOperationForm = () => {
                     }}
                     scrollToFirstError
                 >
-                    <RegionSelectForm 
-                        formProps={form}
-                    />
                     {/*
                     <SimpleInputForm 
                         name="corporateName"

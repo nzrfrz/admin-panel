@@ -28,7 +28,14 @@ export const SimpleOperation = () => {
     const [form] = Form.useForm();
     const { isDarkMode } = useContext(GlobalContext);
     const [isModalFormOpen, setIsModalFormOpen] = useState(false);
+
+    // set httpMethod from butt0n click, either it post, put or delete
+    // to make a decision when "mutation" service goes
     const [HTTPMethod, setHTTPMethod] = useState(undefined);
+
+    // to store selected row data that want to edit or view detail of the row data
+    // actually just need the id if want to perform an edit
+    const [editedDataRow, setEditedDataRow] = useState({});
 
     const {
         token: { 
@@ -56,7 +63,7 @@ export const SimpleOperation = () => {
                         icon={<PlusOutlined />}
                         onClick={() => {
                             form.resetFields();
-                            setHTTPMethod("Register");
+                            setHTTPMethod("post");
                             setIsModalFormOpen(true);
                             form.setFieldsValue({
                                 name: "dummy name 1",
@@ -94,6 +101,7 @@ export const SimpleOperation = () => {
                     setIsModalFormOpen={setIsModalFormOpen}
                     setHTTPMethod={setHTTPMethod}
                     formProps={form}
+                    setEditedDataRow={setEditedDataRow}
                 />
             </div>
             {/* content section */}
@@ -104,6 +112,7 @@ export const SimpleOperation = () => {
                 setIsModalFormOpen={setIsModalFormOpen}
                 httpMethod={HTTPMethod}
                 formProps={form}
+                editedDataRow={editedDataRow}
             />
             {/* modal form */}
         </div>

@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { GlobalContext } from "../../../../App";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { 
     Modal, 
@@ -15,53 +14,32 @@ import {
     SimpleNumberForm,
     EmailForm,
     ContactForm,
-    openNotification
 } from "../../../_Component";
 
-import { postUserProfile } from "../../../../_services";
-import { getAge, mobileNumberFormat } from "../../../../_helper";
+import { postUserProfile, putUserProfile, useMutateData } from "../../../../_services";
+import { getAge, mobileNumberFormat, toTitleCase } from "../../../../_helper";
 
-export const ModalForm = ({isModalFormOpen, setIsModalFormOpen, httpMethod, formProps}) => {
+export const ModalForm = ({isModalFormOpen, setIsModalFormOpen, httpMethod, formProps, editedDataRow}) => {
     const { apiNotif } = useContext(GlobalContext);
-    const queryClient = useQueryClient();
-
-    const postNewUser = useMutation({
-        mutationFn: postUserProfile,
-        onMutate: () => {
-            openNotification(apiNotif, "newUser", "info", "Adding new user", "Please do not close, change, or refresh page !!");
-        },
-        onSuccess: (data) => {
-            console.log("POST SUCCESS: ", data);
-            setIsModalFormOpen(false);
-            // use to directly fetch data after successfully post, with "userProfile" queryKey
-            queryClient.invalidateQueries(["userProfile"], {exact: true});
-            openNotification(apiNotif, "newUser", "success", "Success", "New user added successfully !!!");
-        },
-        onError: (data) => {
-            console.log("POST ERROR: ", data);
-            openNotification(apiNotif, "newUser", "error", "Error", "New user has not been added, please try again later !!!");
-        }
-    });
+    const mutation = useMutateData(httpMethod, httpMethod === "post" ? postUserProfile : putUserProfile, ["userProfile"], formProps, apiNotif, setIsModalFormOpen, undefined, undefined);
 
     const onFinishForm = (values) => {
         const formData = {
             ...values,
+            name: toTitleCase(values.name),
             dateOfBirth: values.dateOfBirth.format('YYYY-MM-DD'),
             age: getAge(values.dateOfBirth.format('YYYY-MM-DD')),
             phone: `(${values.phone.areaCode}) ${mobileNumberFormat(values.phone.phoneNumber)}`,
             zipCode: values.zipCode.toString()
         }
-        postNewUser.mutateAsync({...formData});
-        console.log(formData);
-    };
 
-    // console.log(formProps.getFieldValue());
-    // const number = "(+213) 435-654-364";
-    // console.log(number.replace(/[\(\)]/g, "").split(" "));
+        mutation.mutateAsync({payload: formData, dataID: editedDataRow.id});
+        // console.log(formProps);
+    };
 
     return (
         <Modal 
-            title={`${httpMethod} User`} 
+            title={`${httpMethod === "post" ? "Add New" : "Edit"} User`} 
             okText={"Save"}
             open={isModalFormOpen} 
             onCancel={() => setIsModalFormOpen(false)}
@@ -78,7 +56,6 @@ export const ModalForm = ({isModalFormOpen, setIsModalFormOpen, httpMethod, form
                     onClick={() => {
                         formProps.validateFields()
                             .then((values) => {
-                                // form.resetFields();
                                 onFinishForm(values);
                             })
                             .catch((info) => {
@@ -91,8 +68,8 @@ export const ModalForm = ({isModalFormOpen, setIsModalFormOpen, httpMethod, form
             <div className="modal-form-container" style={{ paddingTop: "24px" }}>
                 <Form
                     form={formProps}
-                    labelCol={{ span: 8 }}
-                    wrapperCol={{ span: 14 }}
+                    labelCol={{ span: 6 }}
+                    wrapperCol={{ span: 16 }}
                     layout="horizontal"
                     name="userProfile"
                     style={{
@@ -100,6 +77,7 @@ export const ModalForm = ({isModalFormOpen, setIsModalFormOpen, httpMethod, form
                     }}
                     scrollToFirstError
                 >
+
                     <SimpleInputForm 
                         name="name"
                         label="Full Name"
