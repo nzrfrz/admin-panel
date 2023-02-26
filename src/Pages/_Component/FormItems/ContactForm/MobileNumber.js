@@ -6,18 +6,20 @@ import {
     InputNumber
 } from 'antd';
 
+import { useCachedData } from "../../../../_services";
 import { ReactCountryFlag } from "react-country-flag"
-
-import { getDialCode } from "../../../../_services/dialCodeData";
 
 const { Option } = Select;
 
 export const MobileNumber = ({name, label}) => {
-    const [dialCode, setDialCode] = useState([]);
+    // const [dialCode, setDialCode] = useState([]);
 
-    useEffect(() => {
-        getDialCode(setDialCode);
-    }, []);
+    // useEffect(() => {
+    //     getDialCode(setDialCode);
+    // }, []);
+
+    const fetchedData = useCachedData(["phoneDialCode"]);
+    const dialCode = fetchedData.data;
 
     return (
         <Form.Item
@@ -44,7 +46,7 @@ export const MobileNumber = ({name, label}) => {
                         }}
                     >
                         {
-                            dialCode.map((data, index) => 
+                            dialCode?.map((data, index) => 
                                 <Option key={index} value={data.dial_code} >
                                     <ReactCountryFlag
                                         svg

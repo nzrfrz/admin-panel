@@ -235,6 +235,14 @@ export const ComplexOperationForm = () => {
                     }}
                     scrollToFirstError
                 >
+                <RegionSelectForm 
+                    formProps={form}
+                />
+                <ContactForm 
+                    name="officeNumber"
+                    label="Office Number"
+                    isMobileNumber={true}
+                />
                     {/*
                     <SimpleInputForm 
                         name="corporateName"

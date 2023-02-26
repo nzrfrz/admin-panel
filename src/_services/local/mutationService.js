@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { openNotification } from "../Pages/_Component";
+import { openNotification } from "../../Pages/_Component";
 
 export const useMutateData = (httpMethod, fetchFn, queryKey, formProps, apiNotif, setIsModalFormOpen = undefined, navigate = undefined, routePath = undefined) => {
     const httpMethodAlias = () => {

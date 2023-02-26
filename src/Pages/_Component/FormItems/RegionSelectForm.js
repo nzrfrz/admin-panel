@@ -1,29 +1,19 @@
-import React, { useContext, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
+
 import { 
     Form,
     Select
 } from 'antd';
-import { GlobalContext } from "../../../App";
 
-import { getIndonesiaRegionData } from "../../../_services/regionData";
-import { useQuery } from "@tanstack/react-query";
-import { openNotification } from "../openNotification";
+import { useCachedData } from "../../../_services";
 
 export const RegionSelectForm = ({formProps, name, fullRegion}) => {
-    const { apiNotif } = useContext(GlobalContext);
-
     const [selectedProvince, setSelectedProvince] = useState(undefined);
     const [selectedRegency, setSelectedRegency] = useState(undefined);
     const [selectedSubDistrict, setSelectedSubDistrict] = useState(undefined);
 
-    const { data } = useQuery({
-        queryKey: ["indonesiaRegionData"],
-        queryFn: getIndonesiaRegionData,
-        staleTime: 60000,
-        onError: (error) => {
-            openNotification(apiNotif, "indonesiaRegionData", "error", error.response.data, "Province data couldn't be load, please refresh your browser");
-        }
-    });
+    const fetchedData = useCachedData(["indonesiaRegionData"]);
+    const data = fetchedData.data;
 
     const formName = useMemo(() => {
         const provinceName = name === undefined ? "province" : `${name}Province`;
@@ -110,8 +100,8 @@ export const RegionSelectForm = ({formProps, name, fullRegion}) => {
             <Select
                 showSearch
                 allowClear
-                loading={data === undefined ? true : false}
-                disabled={data === undefined ? true : false}
+                loading={data?.fetchStatus === "fetching" ? true : false}
+                disabled={data?.fetchStatus === "fetching" ? true : false}
                 options={provinceData}
                 placeholder="Select Province"
                 optionFilterProp="children"

@@ -37,7 +37,7 @@ const { Text } = Typography;
 
 export const HomeLayout = () => {
     const location = useLocation();
-    const { isDarkMode, setIsDarkMode } = useContext(GlobalContext);
+    const { isDarkMode, setIsDarkMode, apiNotif } = useContext(GlobalContext);
 
     const [collapsed, setCollapsed] = useState(false);
     const [isShrink, setIsShrink] = useState(false);

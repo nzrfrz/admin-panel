@@ -15,7 +15,8 @@ import {
     getUserProfile, 
     deleteUserProfile, 
     useQueryData, 
-    useMutateData 
+    useMutateData,
+    useCachedData,
 } from "../../../../_services";
 
 import { getAge } from "../../../../_helper";
@@ -25,18 +26,19 @@ const { Text } = Typography;
 export const UserProfileTable = ({setIsModalFormOpen, setHTTPMethod, formProps, setEditedDataRow}) => {
     const { apiNotif } = useContext(GlobalContext);
 
-    const queryData = useQueryData(["userProfile"], getUserProfile, apiNotif);
+    const fetchedData = useCachedData(["userProfile"]);
     const mutateData = useMutateData("delete", deleteUserProfile, ["userProfile"], undefined, apiNotif);
+    // console.log(fetchedData);
 
     const userProfileData = useMemo(() => {
-        return queryData.data?.map((data) => {
+        return fetchedData?.data?.map((data) => {
             return {
                 ...data,
                 dateOfBirth: dayjs(data.dateOfBirth).format("MMMM DD, YYYY"),
                 age: getAge(dayjs(data.dateOfBirth).format("YYYY-MM-DD"))
             }
         })
-    }, [queryData.data]);
+    }, [fetchedData?.data]);
 
     // console.log(userProfileData);
 
@@ -144,7 +146,7 @@ export const UserProfileTable = ({setIsModalFormOpen, setHTTPMethod, formProps, 
 
     return (
         <Table 
-            loading={queryData.isLoading || queryData.isRefetching}
+            loading={fetchedData?.fetchStatus === "fetching" ? true : false}
             rowKey={(record) => record.id} 
             columns={columns} 
             dataSource={userProfileData?.reverse()}
