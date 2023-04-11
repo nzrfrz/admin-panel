@@ -3,6 +3,9 @@
 @import url(./_css/authPage.css);
 @import url(./_css/homeLayout.css);
 @import url(./_css/layout.css);
+@import url(./_css/widget.css);
+
+@import url(./_css/navProfileDD.css);
 
 @import url(./_css/demo/tokpedProfileDD.css);
 @import url(./_css/demo/multiInboxDD.css);
@@ -15,6 +18,8 @@
 @import url(./_css/demo/menuBurger.css);
 @import url(./_css/demo/forms.css);
 @import url(./_css/demo/operation.css);
+@import url(./_css/demo/demoDashboard.css);
+@import url(./_css/demo/chartPage.css);
 
 body {
   margin: 0;
@@ -110,6 +115,35 @@ code {
   transition: all 0.2s;
 }
 /*#endregion ---------- button info ---------- */
+
+/*#region ---------- button logout ---------- */
+.button-logout-container button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.button-logout-container button img {
+  width: 25px;
+  transition: all .3s;
+}
+
+.button-logout-container button:hover {
+  background-color: var(--bgc);
+}
+
+.button-logout-container button:hover img {
+  transform: rotate(90deg);
+  transition: all 0.3s;
+}
+
+.button-logout-container button:active img {
+  transform: translateX(15px) rotate(90deg);
+  transition: all 0.3s;
+}
+/*#endregion ---------- button logout ---------- */
 
 @media (width < 560px) {
   div .ant-picker-panels {

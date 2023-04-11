@@ -1,0 +1,18 @@
+{
+    "title": "Basic Box Plot Chart",
+    "xAxisTitle": "Basic Box Plot X Axis Title",
+    "yAxisTitle": "Basic Box Plot Y Axis Title",
+    "seriesData": [
+        {
+            "name": "Basic Box Plot",
+            "data": [
+                { "x": "Bread",  "y": [179, 256, 300, 418, 274] },
+                { "x": "Cake",  "y": [252, 346, 409, 437, 374.5] },
+                { "x": "Biscuit",  "y": [236, 281.5, 336.5, 428, 313] },
+                { "x": "Doughnut",  "y": [340, 382, 430, 452, 417] },
+                { "x": "Pancakes",  "y": [194, 224.5, 342, 384, 251] },
+                { "x": "Bagels",  "y": [241, 255, 276.5, 294, 274.5] }
+            ]
+        }
+    ]
+}

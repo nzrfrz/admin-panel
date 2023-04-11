@@ -1,5 +1,7 @@
-import React, { useContext } from "react";
-import { GlobalContext } from "../../../../App";
+import React, { useCallback, useContext, useMemo } from "react";
+import { useLocation } from "react-router-dom";
+// import { GlobalContext } from "../../../../App";
+import { GlobalContext } from "../../../../GlobalContext";
 
 import { 
     Modal, 
@@ -14,32 +16,64 @@ import {
     SimpleNumberForm,
     EmailForm,
     ContactForm,
-} from "../../../_Component";
+    CurrencyForm,
+} from "../../../../Component";
 
-import { postUserProfile, putUserProfile, useMutateData } from "../../../../_services";
-import { getAge, mobileNumberFormat, toTitleCase } from "../../../../_helper";
+import { getMedicinesPaginated, postMedicines, putMedicines, useMutateData } from "../../../../_services";
+import { toTitleCase, urlPaginationSplitter } from "../../../../_helper";
 
-export const ModalForm = ({isModalFormOpen, setIsModalFormOpen, httpMethod, formProps, editedDataRow}) => {
+export const ModalForm = ({isModalFormOpen, setIsModalFormOpen, httpMethod, formProps, editedDataRow, searchValue}) => {
+    const location = useLocation();
+    
     const { apiNotif } = useContext(GlobalContext);
-    const mutation = useMutateData(httpMethod, httpMethod === "post" ? postUserProfile : putUserProfile, ["userProfile"], formProps, apiNotif, setIsModalFormOpen, undefined, undefined);
+    
+    const paginationSplitter = urlPaginationSplitter(location.search);
+
+    const mutateData = useMutateData({
+        actionType: httpMethod,
+        mutateFn: httpMethod === "post" ? postMedicines : putMedicines,
+        queryKey: ["medicines", Number(paginationSplitter.limit), Number(paginationSplitter.page), searchValue],
+        refetchFn: () => getMedicinesPaginated(Number(paginationSplitter.limit), Number(paginationSplitter.page), searchValue),
+        lsKey: undefined,
+        formProps,
+        apiNotif,
+        apiKey: "post_medicine",
+        setIsModalFormOpen: setIsModalFormOpen,
+        navigate: () => {},
+        routePath: undefined,
+    });
+    // console.log(httpMethod);
+
+    const httpMethodTitleAlias = useMemo(() => {
+        switch (httpMethod) {
+            case "post":
+                return "Add New User";
+            case "put":
+                return "Edit User";
+            case "viewDetail":
+                return "User Detail";
+            default:
+                break;
+        }
+    }, [httpMethod]);
 
     const onFinishForm = (values) => {
         const formData = {
             ...values,
             name: toTitleCase(values.name),
-            dateOfBirth: values.dateOfBirth.format('YYYY-MM-DD'),
-            age: getAge(values.dateOfBirth.format('YYYY-MM-DD')),
-            phone: `(${values.phone.areaCode}) ${mobileNumberFormat(values.phone.phoneNumber)}`,
-            zipCode: values.zipCode.toString()
+            manufacturer: toTitleCase(values.manufacturer),
+            dosage: values.dosage.toString() + " mg",
+            price: values.price.toString(),
         }
 
-        mutation.mutateAsync({payload: formData, dataID: editedDataRow.id});
-        // console.log(formProps);
+        mutateData.mutateAsync({payload: formData, dataID: editedDataRow.id});
+        // console.log(formData);
     };
+    // console.log(mutation.status);
 
     return (
         <Modal 
-            title={`${httpMethod === "post" ? "Add New" : "Edit"} User`} 
+            title={httpMethodTitleAlias} 
             okText={"Save"}
             open={isModalFormOpen} 
             onCancel={() => setIsModalFormOpen(false)}
@@ -50,7 +84,9 @@ export const ModalForm = ({isModalFormOpen, setIsModalFormOpen, httpMethod, form
                 >
                     Cancel
                 </Button>,
+                httpMethod !== "viewDetail" &&
                 <ButtonSuccess
+                    loading={mutateData?.status === "loading" ? true : false}
                     key="save" 
                     text="Save"
                     onClick={() => {
@@ -68,7 +104,7 @@ export const ModalForm = ({isModalFormOpen, setIsModalFormOpen, httpMethod, form
             <div className="modal-form-container" style={{ paddingTop: "24px" }}>
                 <Form
                     form={formProps}
-                    labelCol={{ span: 6 }}
+                    labelCol={{ span: 8 }}
                     wrapperCol={{ span: 16 }}
                     layout="horizontal"
                     name="userProfile"
@@ -76,40 +112,29 @@ export const ModalForm = ({isModalFormOpen, setIsModalFormOpen, httpMethod, form
                         width: "auto",
                     }}
                     scrollToFirstError
+                    disabled={httpMethod === "viewDetail" ? true : false}
                 >
 
                     <SimpleInputForm 
                         name="name"
-                        label="Full Name"
-                    />
-                    <DOBForm />
-                    <AddressForm 
-                        name="address"
-                        label="Address"
+                        label="Medicine Name"
                     />
                     <SimpleInputForm 
-                        name="city"
-                        label="City"
-                    />
-                    <SimpleInputForm 
-                        name="state"
-                        label="State"
+                        name="manufacturer"
+                        label="Manufacturer"
                     />
                     <SimpleNumberForm 
-                        name="zipCode"
-                        label="ZIP Code"
+                        name="dosage"
+                        label="Dosage"
                     />
-                    <SimpleInputForm 
-                        name="userName"
-                        label="User Name"
+                    <SimpleNumberForm 
+                        name="quantity"
+                        label="Quantity"
                     />
-                    <EmailForm 
-                        name="email"
-                        label="Email"
-                    />
-                    <ContactForm 
-                        name="phone"
-                        label="Phone"
+                    <CurrencyForm 
+                        name="price"
+                        label="Price"
+                        prefix="$"
                     /> 
                     {/* 
                 */}

@@ -7,7 +7,8 @@ import {
     Typography, 
 } from "antd";
 
-import { GlobalContext } from "../../../../App";
+// import { GlobalContext } from "../../../../App";
+import { GlobalContext } from "../../../../GlobalContext";
 
 import { 
     FaBell,
@@ -114,7 +115,7 @@ export const TokpedProfileDD = () => {
                                         setOpenDD(false);
                                     }}
                                 >
-                                    <img src={dummyProfile} alt="profile" />
+                                    <img src={"http://drive.google.com/uc?export=view&id=1DCruElbQ1qv6eqtLqyNL_rzrZ7egs-o2"} alt="profile" />
                                     <div className="top-section-left-side">
                                         <Text strong>User</Text>
                                         <div className="user-member-status">
@@ -331,7 +332,7 @@ export const TokpedProfileDD = () => {
                 )}
             >
                 <div className="header-menu-dd-profile-title">
-                    <img src={dummyProfile} alt="profile" />
+                    <img src={"http://drive.google.com/uc?export=view&id=1DCruElbQ1qv6eqtLqyNL_rzrZ7egs-o2"} alt="profile" />
                     {/* <Text>User</Text> */}
                 </div>
             </Dropdown>

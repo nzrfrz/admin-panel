@@ -52,12 +52,6 @@
     transition: all 0.2s;
 }
 
-.toggle-theme-container:hover {
-    background: var(--bgColor);
-    background-color: var(--bgColor);
-    transition: all 0.2s;
-}
-
 .light-mode {
     --size: 1.5rem;
     

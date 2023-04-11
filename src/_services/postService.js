@@ -1,5 +1,5 @@
 import axios from "axios";
-import { openNotification } from "../Pages/_Component";
+import { openNotification } from "../Component";
 
 const BASE_PATH = "https://63a02d6524d74f9fe8305eed.mockapi.io";
 

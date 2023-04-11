@@ -1,7 +1,8 @@
-import React from "react";
+import React, { lazy } from "react";
 import { Link } from "react-router-dom";
 import {
     HomeOutlined,
+    AreaChartOutlined
 } from "@ant-design/icons";
 import { 
     AiFillCode, 
@@ -9,8 +10,12 @@ import {
 } from "react-icons/ai";
 import { RxDot } from "react-icons/rx";
 import { FaWpforms } from "react-icons/fa";
-import { RiKnifeLine } from "react-icons/ri"
+import { RiKnifeLine } from "react-icons/ri";
+import { IoMapOutline } from "react-icons/io5";
 
+// import { 
+//     DemoDashboard,
+// } from "./LazyLoading";
 
 import { 
     DemoDashboard,
@@ -19,6 +24,7 @@ import {
     LayoutOne,
     LayoutTwo,
     LayoutThree,
+    LayoutFour,
 
     ChatPage,
     DiscussionPage,
@@ -27,9 +33,19 @@ import {
     ComplainPages,
 
     SimpleOperation,
-    ComplexOperation,
-    ComplexOperationForm,
+
+    LineChartPage,
+    AreaChartPage,
+    BarChartPage,
+    BoxPlotChartPage,
+    CandlestickChartPage,
+    PieChartPage,
+    RadarChartPage,
+
+    LeafletMap,
 } from "../Pages/Demo";
+
+// const DemoDashboard = lazy(() => import("../Pages/Demo/Dashboard/DemoDashboard"));
 
 // Edit here to create new sidebar route
 export const sidebarRouteList = [
@@ -83,6 +99,14 @@ export const sidebarRouteList = [
                 icon: null,
                 children: null
             },
+            {
+                key: "Layout Four",
+                label: <Link to="/content_layout/layout_four" ><RxDot/>Layout Four</Link>,
+                path: "/content_layout/layout_four",
+                element: <LayoutFour />,
+                icon: null,
+                children: null
+            },
         ]
     },
     {
@@ -101,11 +125,69 @@ export const sidebarRouteList = [
                 icon: null,
                 children: null
             },
+        ],
+    },
+    {
+        key: "Chart",
+        label: "Chart",
+        path: "/chart",
+        isIndex: false,
+        element: null,
+        icon: <AreaChartOutlined />,
+        children: [
             {
-                key: "Complex",
-                label: <Link to="/operation/complex" ><RxDot/>Complex Operation</Link>,
-                path: "/operation/complex",
-                element: <ComplexOperation />,
+                key: "Line",
+                label: <Link to="/chart/line" ><RxDot/>Line</Link>,
+                path: "/chart/line",
+                element: <LineChartPage />,
+                icon: null,
+                children: null
+            },
+            {
+                key: "Area",
+                label: <Link to="/chart/area" ><RxDot/>Area</Link>,
+                path: "/chart/area",
+                element: <AreaChartPage />,
+                icon: null,
+                children: null
+            },
+            {
+                key: "Bar",
+                label: <Link to="/chart/bar" ><RxDot/>Bar</Link>,
+                path: "/chart/bar",
+                element: <BarChartPage />,
+                icon: null,
+                children: null
+            },
+            {
+                key: "Box Plot",
+                label: <Link to="/chart/box_plot" ><RxDot/>Box Plot</Link>,
+                path: "/chart/box_plot",
+                element: <BoxPlotChartPage />,
+                icon: null,
+                children: null
+            },
+            {
+                key: "Candlestick",
+                label: <Link to="/chart/candlestick" ><RxDot/>Candlestick</Link>,
+                path: "/chart/candlestick",
+                element: <CandlestickChartPage />,
+                icon: null,
+                children: null
+            },
+            {
+                key: "Pie",
+                label: <Link to="/chart/pie" ><RxDot/>Pie</Link>,
+                path: "/chart/pie",
+                element: <PieChartPage />,
+                icon: null,
+                children: null
+            },
+            {
+                key: "Radar",
+                label: <Link to="/chart/radar" ><RxDot/>Radar</Link>,
+                path: "/chart/radar",
+                element: <RadarChartPage />,
                 icon: null,
                 children: null
             },
@@ -156,15 +238,6 @@ export const otherRouteList = [
         path: "/complain",
         isIndex: false,
         element: <ComplainPages />,
-        icon: null,
-        children: [],
-    },
-    {
-        key: "Operation Registration",
-        label: null,
-        path: "/operation/complex/:method",
-        isIndex: false,
-        element: <ComplexOperationForm />,
         icon: null,
         children: [],
     },

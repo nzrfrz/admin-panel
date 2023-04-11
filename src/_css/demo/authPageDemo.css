@@ -1,0 +1,5 @@
+.login-page-container {
+    display: flex;
+    background-color: grey;
+    min-width: 320px;
+}

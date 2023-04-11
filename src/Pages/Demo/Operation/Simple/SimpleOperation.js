@@ -1,5 +1,7 @@
-import React, { useContext, useState } from "react";
-import { GlobalContext } from "../../../../App";
+import React, { useContext, useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+// import { GlobalContext } from "../../../../App";
+import { GlobalContext } from "../../../../GlobalContext";
 import dayjs from "dayjs";
 
 import { 
@@ -13,29 +15,41 @@ import {
     Divider,
     Input,
     Form,
+    Pagination
 } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
-import { ButtonInfo } from "../../../_Component";
-import { UserProfileTable } from "./UserProfileTable";
+import { ButtonInfo, Spinner } from "../../../../Component";
+import { MedicinesTable } from "./MedicinesTable";
+import { MedicinesTableV2 } from "./MedicinesTableV2";
 
 import { ModalForm } from "./ModalForm";
+import { ModalFormV2 } from "./ModalFormV2";
+
+import { useDebounce } from "../../../../_helper/useDebounce";
+
+import { useQueryData, getMedicinesPaginated, useMutateData, useCachedData, useCacehdQueriesData } from "../../../../_services";
+import { urlPaginationSplitter } from "../../../../_helper";
 
 const { Search } = Input;
 const { Text, Title } = Typography;
 
 export const SimpleOperation = () => {
+    const { isDarkMode, apiNotif } = useContext(GlobalContext);
+
     const [form] = Form.useForm();
-    const { isDarkMode } = useContext(GlobalContext);
     const [isModalFormOpen, setIsModalFormOpen] = useState(false);
 
-    // set httpMethod from butt0n click, either it post, put or delete
+    // set httpMethod from button click, either it post, put or delete
     // to make a decision when "mutation" service goes
     const [HTTPMethod, setHTTPMethod] = useState(undefined);
 
     // to store selected row data that want to edit or view detail of the row data
     // actually just need the id if want to perform an edit
     const [editedDataRow, setEditedDataRow] = useState({});
+    
+    const [searchValue, setSearchValue] = useState("");
+    const debounceSave = useDebounce((nextValue) => setSearchValue(nextValue), 1000);
 
     const {
         token: { 
@@ -45,75 +59,98 @@ export const SimpleOperation = () => {
 
     return (
         <div 
-            className="two-row-layout-container"
+            className="one-column-layout-container"
             style={{
                 "--bgc": isDarkMode === true ? "var(--contentContainerDarkMode)" : "var(--contentContainerLightMode)"
             }}
         >
-            {/* filter section */}
-            <div 
-                className="top-section"
-                style={{
-                    borderRadius: borderRadiusLG,
-                }}
-            >
-                <div className="button-add-something-container">
+            <div className="page-content" style={{ borderRadius: borderRadiusLG }}>
+                <div className="content-title-container">
+                    <div className="content-title">
+                        <Title level={4}>Medicines List</Title>
+                    </div>
                     <ButtonInfo 
-                        text="Add User"
+                        text="Add Medicine"
                         icon={<PlusOutlined />}
                         onClick={() => {
                             form.resetFields();
                             setHTTPMethod("post");
                             setIsModalFormOpen(true);
-                            form.setFieldsValue({
-                                name: "dummy name 1",
-                                dateOfBirth: dayjs("1992-04-06"),
-                                phone: {
-                                    areaCode: "+54",
-                                    phoneNumber: 857463521,
-                                },
-                                address: "dummy address 1",
-                                city: "city 1",
-                                state: "state 1",
-                                zipCode: 987654,
-                                userName: "username1",
-                                email: "dummy.user1@mail.com"
-
-                            });
-                            console.log("ADD USER");
+                        }}
+                    />
+                    <Search 
+                        allowClear
+                        enterButton 
+                        size="large"
+                        placeholder="Search Something?" 
+                        onSearch={(value) => {
+                            setSearchValue(value);
+                        }}
+                        onChange={(e) => {
+                            // console.log("SEARCH ON CHANGE: \n", e.target.value);
+                            debounceSave(e.target.value);
                         }}
                     />
                 </div>
-                <div className="search-input-container" style={{ flexGrow: 1 }}>
-                    <Search 
-                        placeholder="Search Something?" 
-                        enterButton 
+                <div className="page-content-container">
+                    {/* 
+                        Table V1, using server pagination and search with debounce,
+                        and change page to string params to identofy which page is currently on view
+                        -- to uncomment the component, block all component then alt + arrow up / arrow down
+                        -----------------------------------------------------------------------------------
+                    */}
+                    <MedicinesTable 
+                        setIsModalFormOpen={setIsModalFormOpen}
+                        setHTTPMethod={setHTTPMethod}
+                        formProps={form}
+                        setEditedDataRow={setEditedDataRow}
+                        searchValue={searchValue}
+                    /> 
+
+                    {/* 
+                        Table V2, using a local pagination and search
+                        ---------------------------------------------
+                    <MedicinesTableV2
+                        setIsModalFormOpen={setIsModalFormOpen}
+                        setHTTPMethod={setHTTPMethod}
+                        formProps={form}
+                        setEditedDataRow={setEditedDataRow}
+                        searchValue={searchValue}
                     />
+                    */}
                 </div>
             </div>
             {/* filter section */}
 
-            {/* content section */}
-            <div className="bottom-section" style={{ borderRadius: borderRadiusLG }}>
-                <Title level={4}>User List</Title>
-
-                <UserProfileTable 
-                    setIsModalFormOpen={setIsModalFormOpen}
-                    setHTTPMethod={setHTTPMethod}
-                    formProps={form}
-                    setEditedDataRow={setEditedDataRow}
-                />
-            </div>
-            {/* content section */}
-
             {/* modal form */}
+            {/*
+                modal form v1, just to do a CRUD operation on Table V1,
+                you need also uncomment to use Table v2
+                -- to uncomment the component, block all component then alt + arrow up / arrow down
+                -------------------------------------------------------
+            */}
             <ModalForm 
                 isModalFormOpen={isModalFormOpen}
                 setIsModalFormOpen={setIsModalFormOpen}
                 httpMethod={HTTPMethod}
                 formProps={form}
                 editedDataRow={editedDataRow}
+                searchValue={searchValue}
+            /> 
+
+            {/*
+                modal form v2 also just to do a CRUD operation on Table V2,
+                you need also uncomment to use Table v2
+                ------------------------------------------------------
+            <ModalFormV2
+                isModalFormOpen={isModalFormOpen}
+                setIsModalFormOpen={setIsModalFormOpen}
+                httpMethod={HTTPMethod}
+                formProps={form}
+                editedDataRow={editedDataRow}
+                searchValue={searchValue}
             />
+            */}
             {/* modal form */}
         </div>
     );

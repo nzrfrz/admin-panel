@@ -1,5 +1,6 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
+
 import { 
     Layout, 
     Menu, 
@@ -15,9 +16,10 @@ import {
     UserOutlined,
 } from '@ant-design/icons';
 
-import { GlobalContext } from "../App";
+// import { GlobalContext } from "../App";
+import { GlobalContext } from "../GlobalContext";
 
-import { MenuBurger } from "./_Component/MenuBurger";
+import { MenuBurger, NavbarProfileDD } from "../Component";
 
 import { toTitleCase } from "../_helper";
 
@@ -28,24 +30,30 @@ import {
     MultiInboxDD,
     TokpedNotifDD,
     TokpedCartDD
-} from "./Demo/_Component";
+} from "../Pages/Demo/_Component";
 
 import { sidebarItems, sidebarItemKeys, BreadCrumb } from "../Routes";
+import { useCacehdQueriesData, useCachedData, useMutableDataFetching, useMasterDataFetching, useQueryData, getMedicines } from "../_services";
 
 const { Header, Sider, Content, Footer } = Layout;
 const { Text } = Typography;
 
 export const HomeLayout = () => {
     const location = useLocation();
-    const { isDarkMode, setIsDarkMode, apiNotif } = useContext(GlobalContext);
+    const { 
+        isDarkMode, 
+        setIsDarkMode, 
+        windowDimension, 
+        setWindowDiemnsion
+    } = useContext(GlobalContext);
 
     const [collapsed, setCollapsed] = useState(false);
     const [isShrink, setIsShrink] = useState(false);
     const [openKeys, setOpenKeys] = useState(["Dashboard"]);
-    const [windowDimension, setWindowDiemnsion] = useState({
-        width: window.innerWidth,
-        height: window.innerHeight,
-    });
+    // const [windowDimension, setWindowDiemnsion] = useState({
+    //     width: window.innerWidth,
+    //     height: window.innerHeight,
+    // });
 
     const currentMenuKeys = useMemo(() => {
         const splitPath = location.pathname.replace(new RegExp("_", "g"), " ");
@@ -77,9 +85,10 @@ export const HomeLayout = () => {
         return () => {
             window.removeEventListener('resize', getSize);
         };
-    }, [windowDimension.width, windowDimension.height]);
+    }, [windowDimension.width]);
 
-    // console.log(isDarkMode);
+    // const cachedData = useCachedData(["userProfile"]);
+    // console.log(windowDimension.width);
 
     const {
         token: { 
@@ -103,7 +112,7 @@ export const HomeLayout = () => {
                 width={230}
                 style={{
                     position: windowDimension.width < 768 ? "absolute" : "relative",
-                    zIndex: windowDimension.width < 768 ? 3 : 1,
+                    zIndex: windowDimension.width < 768 ? 9999 : 1,
                     display: "flex",
                     height: windowDimension.width < 768 ? "100vh" : "none",
                     flexDirection: "column",
@@ -186,7 +195,7 @@ export const HomeLayout = () => {
                         borderBottomRightRadius: windowDimension.width < 768 ? "16px" : "0"
                     }}
                 >
-                    {/* header items */}
+                    {/* navbar items */}
                     <TokpedCartDD />
                     <TokpedNotifDD 
                         innerWidth={windowDimension.width}
@@ -219,20 +228,26 @@ export const HomeLayout = () => {
                             }} 
                         />
                     </div>
-                    <TokpedProfileDD />
-                    {/* header items */}
+                    <NavbarProfileDD 
+                        windowWidth={windowDimension.width}
+                    />
+                    {/* <TokpedProfileDD /> */}
+                    {/* navbar items */}
                 </Header>
-                <BreadCrumb />
+                {
+                    currentMenuKeys !== "Dashboard" &&
+                    <BreadCrumb />
+                }
                 <Content
                     style={{
                         // width: "500px",
-                        margin: '12px 16px',
+                        margin: '16px 24px',
                         background: "transparent",
                         overflowY: "auto",
                         // overflowX: "hidden",
                         scrollbarWidth: "none",
                         msOverflowStyle: "none",
-                        transition: "all 0.5s"
+                        transition: "all 0.5s",
                     }}
                 >
                     <Outlet />

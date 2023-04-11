@@ -1,6 +1,9 @@
 export * from "./http/regionData";
 export * from "./http/dialCodeData";
 
+export * from "./http/auth";
+export * from "./http/medicines";
+
 export * from "./postService";
 
 export * from "./Demo";

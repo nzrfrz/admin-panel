@@ -1,0 +1,26 @@
+/*#region ---------- chart ---------- */
+.fix-chart-container-dimension {
+    /* max-width: 720px; */
+    margin: 32px auto;
+    height: var(--fixChartHeight);
+}
+/*#endregion ---------- chart ---------- */
+
+/*#region ---------- chart page title container ---------- */
+.chart-page-title-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.filter-select-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+/*#endregion ---------- chart page title container ---------- */
+
+.lineChart {
+    height: 300px;
+}
+
