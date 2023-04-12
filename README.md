@@ -16,10 +16,11 @@ Admin panel with reactJS and Ant Design V5 ui library. This project aim at using
 
 ## Installation
 1. Clone this github repo
-2. Inside this folder, open terminal and run `npm install` or `npm install --legacy-peer-deps` if the first run is not successfully
-3. Then run `npm start`.
+2. Create `.env` file in root project directory, then copy all from `.env.example` into `.env` you just created
+3. Inside this folder, open terminal and run `npm install` or `npm install --legacy-peer-deps` if the first run is not successfully
+4. Then run `npm start`.
     - Running in production mode, where all authorization will not be save in any browser storage, and use htp only cookie
-4. Or run `npm run dev`
+5. Or run `npm run dev`
     - To run in production mode, with all authorization saved in local storage 
 
 ## Customizing theme
